@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load bootstrap4 %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    {% bootstrap_css %}
+    {% block CSS %}{% endblock %}
+</head>
+<body>
+    {% if messages %}
+        {% for message in messages %}
+        <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center"{% endif %}>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    {% include '__nav.html' %}
+    {% block body %}
+    {% endblock %}
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>
