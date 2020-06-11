@@ -1,0 +1,25 @@
+body {
+    background-color: #222;
+    color: #999;
+}
+
+body, h1, ul, li {
+    margin: 0;
+}
+
+h1 {
+    font-weight: normal;
+    font-size: 100%;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}

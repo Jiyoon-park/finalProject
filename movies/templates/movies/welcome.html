@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'movies/welcome.css' %}" /> 
+    <title>{%block title%}Welcome{% endblock %}</title>
+</head>
+<body>
+    <div class="title">
+        it's a
+        <ul class="title-adj-list">
+            <li>nice</li>
+            <li>fancy</li>
+            <li>cool</li>
+        </ul>
+        <h1>Title</h1>
+    </div>
+    <button><a href="{% url 'movies:index' %}">GO</a></button>
+</body>
+</html>

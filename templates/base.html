@@ -15,7 +15,7 @@
         <div {% if message.tags %} class="alert alert-{{ message.tags }} text-center"{% endif %}>{{ message }}</div>
         {% endfor %}
     {% endif %}
-
+    
     {% include '__nav.html' %}
     {% block body %}
     {% endblock %}
