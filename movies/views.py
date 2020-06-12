@@ -27,7 +27,7 @@ def index(request):
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
     # same_genres = Movie.objects.filter()
-    # reivews도 .filter 아닐까?
+    # 아래 코드 에러나ㅠㅠ reivews도 혹시 .filter 아닐까?
     # reviews = Review.objects.all(movie_id=movie.pk)
     reviews = Review.objects.all()
     context = {
