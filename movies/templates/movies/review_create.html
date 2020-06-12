@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block body %}
+<h1>{{ movie.title }} 리뷰작성</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button class="btn btn-primary">제출</button>
+    </form>
+{% endblock %}

@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}main{% endblock %}
-
 {% block body %}
-    <h1>Movie index</h1>
+    <h1 class= "font-weight-bold">Movie</h1>
+    <br>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+            </tr>
+          </thead>
+          {% for movie in movies %}
+              <tbody>
+                <tr>
+                  <td>{{ movie.pk }}</td>
+                  <td><a href ="{% url 'movies:movie_detail' movie.pk %}">{{ movie.title }}</a></td>
+                </tr>
+
+              </tbody>
+          {% endfor %}
+        </table>
 {% endblock %}
