@@ -4,19 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'movies/welcome.css' %}" /> 
+    <link rel="stylesheet" type="text/css" href="{% static 'movies/welcome.css' %}" />
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Faster+One&display=swap" rel="stylesheet">
     <title>{%block title%}Welcome{% endblock %}</title>
 </head>
 <body>
-    <div class="title">
-        it's a
-        <ul class="title-adj-list">
-            <li>nice</li>
-            <li>fancy</li>
-            <li>cool</li>
-        </ul>
-        <h1>Title</h1>
+    <div class="wrapper">
+        <div class="title">
+            it's a
+            <div class="title-adj">
+                <ul class="title-adj-list">
+                    <li>wonderful</li>
+                    <li>nice</li>
+                    <li>fancy</li>
+                    <li>cool</li>
+                    <li>wonderful</li>
+                </ul>
+            </div>
+            <h1 class="web-name">Chobab's Project</h1>
+        </div>
+        <button class="btn"><a href="{% url 'movies:index' %}">CLICK</a></button>
     </div>
-    <button><a href="{% url 'movies:index' %}">GO</a></button>
 </body>
 </html>
