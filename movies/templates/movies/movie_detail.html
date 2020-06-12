@@ -44,6 +44,9 @@
       <div class="recommend_movie">
         <h2>같은 장르 영화 추천 할거야</h2>
         <!-- 같은 장르 영화 세개정도 포문 돌려 추천 -->
+        {% for same_genre in same_genres %}
+        <p>{{same_genre.title}}</p>
+        {% endfor %}
         <div>
           <img src="">
           <p>title</p>
