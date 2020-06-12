@@ -39,7 +39,6 @@ section {
 }
 
 .recommend div {
-    background-color: grey;
     width:200px;
     height:250px;
     margin: 0 5px;
@@ -52,6 +51,5 @@ section {
 
 .genre {
     box-sizing: border-box;
-    background-color: grey;
     height: 150px;
 }

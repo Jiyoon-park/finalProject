@@ -1,26 +1,79 @@
 {% extends 'base.html' %}
 
+{% load bootstrap4 %}
+
+{% block title %}movie-datail{% endblock %}
+
+{% block CSS %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'movies/detail.css' %}" /> -->
+{% endblock %}
+
 {% block body %}
-<h1>Movie Detail</h1>
-<hr>
-<h3>제목: {{ movie.title }}</h3>
-<a href="{% url 'movies:review_create' movie.pk %}">리뷰 작성</a>
-<h1 class= "font-weight-bold">REVIEW</h1>
-    <br>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-            </tr>
-          </thead>
-          {% for review in movie.review_set.all %}
-              <tbody>
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <th scope="row"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.content }}</a></th>
-                </tr>
-              </tbody>
-          {% endfor %}
-        </table>
+<style>
+  header {
+    padding-top: 20%;
+    background-image: url('https://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}');
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+  }
+
+  header h1 {
+    font-size: 2.5rem;
+  }
+</style>
+  <nav>
+    <div class="d-flex justify-content-between">
+      <a href="{% url 'movies:index' %}"><button>Home</button></a>
+      <a href="{% url 'movies:review_create' movie.pk %}"><button>Create</button></a>
+    </div>
+  </nav>
+  <header>
+    <h1>{{ movie.title }}</h1>
+  </header>
+  
+  <div class="row">
+    <section class="col-6">
+      <div class="movie_info">
+        <h2>plot</h2>
+        <p>{{ movie.overview }}</p>
+        <button>genre</button>
+      </div>
+      <div class="recommend_movie">
+        <h2>같은 장르 영화 추천 할거야</h2>
+        <!-- 같은 장르 영화 세개정도 포문 돌려 추천 -->
+        <div>
+          <img src="">
+          <p>title</p>
+        </div>
+      </div>
+    </section>
+    <section class="col-6">
+      <div class="trailer">
+        <h2>trailer</h2>
+        <p>여기에 trailer</p>
+      </div>
+      <div class="review_list">
+        <h2>REVIEW</h2>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+              </tr>
+            </thead>
+            {% for review in movie.review_set.all %}
+                <tbody>
+                  <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <th scope="row"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.content }}</a></th>
+                  </tr>
+                </tbody>
+            {% endfor %}
+          </table>
+      </div>
+    </section>
+  </div>
 {% endblock %}
