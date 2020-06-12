@@ -1,10 +1,30 @@
 {% extends 'base.html' %}
-{% block body %}
-<h1>{{ movie.title }} 리뷰작성</h1>
+{% load bootstrap4 %}
 
-    <form action="" method="POST">
+{% block title %}review_create{% endblock %}
+
+{% block body %}
+<style>
+    .wrapper {
+      min-height: 100vh;
+      background-image: url('https://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}');
+      background-position: center;
+      background-size: cover;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+</style>
+<div class="wrapper">
+    <div class="review-create-form">
+    <h1>{{ movie.title }}</h1>
+    <form action="" method="POST" style="width:400px">
         {% csrf_token %}
-        {{ form }}
-        <button class="btn btn-primary">제출</button>
+        {% bootstrap_form form%}
+        <button class="btn btn-primary text-center" style="width:100%">sumit</button>
     </form>
+    </div>
+</div>
 {% endblock %}

@@ -1,24 +1,42 @@
 {% extends 'base.html' %}
+
+
 {% block body %}
-<h1>리뷰 title : {{ review.title }}</h1>
-<p>내용 : {{ review.content }}</p>
-{% if request.user != review.user %}
-{% with review_like_users=review.like_users.all %}
-<form action="{% url 'movies:like' review.pk %}">
-    {% if request.user in review_like_users %}
-      <button>좋아요 취소</button>
-    {% else %}
-      <button>좋아요</button>
-    {% endif %}
-</form>
-<p>{{ review_like_users|length }} 명이 좋아합니다. </p>
-{% endwith %}
-{% endif %}
-{% if request.user == review.user %}
-    <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
-        {% csrf_token %}
-        <button>삭제하기</button>
-    </form>
-    <a href="{% url 'movies:review_update' review.pk %}">수정하기</a>
-{% endif %}
+<style>
+  header {
+    padding-top: 20%;
+    background-image: url('https://image.tmdb.org/t/p/original/{{ review.movie.backdrop_path }}');
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+  }
+</style>
+
+  <header>
+  </header>
+  <section>
+    <h3>영화 {{ review.movie.title }}</h3>
+    <p>{{ review.content }}</p>
+  </section>
+  
+  {% if request.user != review.user %}
+  {% with review_like_users=review.like_users.all %}
+  <form action="{% url 'movies:like' review.pk %}">
+      {% if request.user in review_like_users %}
+        <button>좋아요 취소</button>
+      {% else %}
+        <button>좋아요</button>
+      {% endif %}
+  </form>
+  <p>{{ review_like_users|length }} 명이 좋아합니다. </p>
+  {% endwith %}
+  {% endif %}
+  {% if request.user == review.user %}
+      <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
+          {% csrf_token %}
+          <button>삭제하기</button>
+      </form>
+      <a href="{% url 'movies:review_update' review.pk %}">수정하기</a>
+  {% endif %}
 {% endblock %}
