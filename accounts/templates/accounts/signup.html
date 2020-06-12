@@ -4,12 +4,22 @@
 {% block title %}signup{% endblock %}
 
 {% block body %}
-<div class="container">
+<style>
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+</style>
+
+<div class="wrapper">
     <h1>signup</h1>
-    <form action="" method="POST">
+    <form action="" method="POST" style="width:400px">
         {% csrf_token %}
         {% bootstrap_form form%}
-        <button>sumit</button>
+        <button class="btn btn-primary text-center" style="width:100%">sumit</button>
     </form>
 </div>
 {% endblock %}

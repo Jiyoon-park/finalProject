@@ -1,23 +1,123 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block title %}main{% endblock %}
+
+{% block CSS %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/index.css' %}" />
+<link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-    <h1 class= "font-weight-bold">Movie</h1>
-    <br>
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Title</th>
-            </tr>
-          </thead>
-          {% for movie in movies %}
-              <tbody>
-                <tr>
-                  <td>{{ movie.pk }}</td>
-                  <td><a href ="{% url 'movies:movie_detail' movie.pk %}">{{ movie.title }}</a></td>
-                </tr>
+<style>
+    /* header {
+        border: 2px solid red;
+    }
+    section {
+        border: 2px solid white;
+    } */
 
-              </tbody>
-          {% endfor %}
-        </table>
+    .genres {
+        width: 100%;
+        height: 600px;
+        padding: 4%;
+    }
+
+    .genre {
+        box-sizing: border-box;
+        background-color: grey;
+        height: 150px;
+    }
+ 
+</style>
+    <header class="head">
+        <h1 class="text-center">Chobab's Project</h1>
+        {% include '__nav.html' %}
+    </header>
+    <body>
+        <div class="container">
+            <section class="main-section">
+                <h1>여기에 추천 알고리즘 박을거야</h1>
+                <div class="recommend">
+                    <ul>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </ul>
+                </div>
+            </section>
+            <div class="row">
+                <section class="col-8 genres">
+                    <h2>여기 영화 장르마다 캐로젤 쓸거야</h2>
+                    <div class="row genre-container">
+                        <div id="carouselExampleIndicators" class="carousel slide genre col-6" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                              <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                              <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                              <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner">
+                              <div class="carousel-item active">
+                                <img class="d-block w-100" src="..." alt="First slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100" src="..." alt="Second slide">
+                              </div>
+                              <div class="carousel-item">
+                                <img class="d-block w-100" src="..." alt="Third slide">
+                              </div>
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              <span class="sr-only">Next</span>
+                            </a>
+
+                            
+                          </div>
+                        <!-- <div class="col-6 genre">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis voluptates unde molestias quam repellendus quos quaerat soluta tempore tenetur optio esse dicta debitis adipisci, provident ab rem aliquam dolorum cupiditate.</div> -->
+                        <!-- <div class="col-6 genre">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Vel at voluptatem dolor minus laborum voluptas perferendis ad repellat optio vero. Excepturi, illum! Sed minima voluptatibus neque necessitatibus officiis qui? Nulla!</div> -->
+                    
+                    </div>
+                </section>
+                <section class="col-4">
+                    <div class="search-bar">
+                        <h2>검색</h2>
+                        <nav class="navbar navbar-light bg-light">
+                            <form class="form-inline">
+                              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                            </form>
+                          </nav>
+                    </div>
+                    <div class="movie-rank">
+                        <h2>영화 평점 순위</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item active">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Morbi leo risus</li>
+                            <li class="list-group-item">Porta ac consectetur ac</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                          </ul>
+                    </div>
+                    <div class="review-rank">
+                        <h2>리뷰 좋아요 순위</h2>
+                        <ul class="list-group">
+                            <li class="list-group-item active">Cras justo odio</li>
+                            <li class="list-group-item">Dapibus ac facilisis in</li>
+                            <li class="list-group-item">Morbi leo risus</li>
+                            <li class="list-group-item">Porta ac consectetur ac</li>
+                            <li class="list-group-item">Vestibulum at eros</li>
+                          </ul>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </body>
 {% endblock %}
