@@ -1,0 +1,57 @@
+body {
+    background-color: #222;
+    color: #999;
+}
+
+body, h2, li, ul {
+    margin: 0;
+}
+
+h1 {
+    font-size: 100%;
+    font-weight: normal;
+    margin: 40px 0;
+}
+
+section {
+    padding: 4%;
+}
+
+.head h1 {
+    font-size: 40px;
+    line-height: 2;
+    font-style: italic;
+    margin-bottom: 20px;
+    font-family: 'Permanent Marker', cursive;
+    margin-bottom: 40px;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.recommend ul {
+    display: flex;
+    padding: 0;
+}
+
+.recommend div {
+    background-color: grey;
+    width:200px;
+    height:250px;
+    margin: 0 5px;
+}
+
+.genres {
+    width: 100%;
+    height: 600px;
+}
+
+.genre {
+    box-sizing: border-box;
+    background-color: grey;
+    height: 150px;
+}
