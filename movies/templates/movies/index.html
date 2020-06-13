@@ -28,6 +28,9 @@
         <div class="container">
             <section class="main-section">
                 <h1>여기에 추천 알고리즘 박을거야</h1>
+                {% for movie in r_movies %}
+                <p>{{movie.id}}</p>
+                {% endfor %}
                 <div class="recommend">
                     <ul>
                       {% for movie in movies %} 
