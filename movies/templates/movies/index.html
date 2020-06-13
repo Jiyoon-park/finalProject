@@ -7,6 +7,8 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href="{% static 'movies/index.css' %}" />
 <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -27,22 +29,36 @@
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>여기에 추천 알고리즘 박을거야</h1>
-                <div class="recommend">
-                    <ul>
+                <h1>Recommended</h1>
+                <div class="wrapper">
+                    <ul class="recommend-movies">
                       {% for movie in movies %} 
-                        <div>
-                          <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster" style="width:200px;">
-                          <p>{{ movie.title }}</p>
-                          <!-- <p>{{ movie.original_title }}</p> -->
-                        </div>
+                        <li class="recommend-movie">
+                          <div class="recommend-movie-detail">
+                            <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster">
+                            <div class="detail-contents">
+                              <h2>{{ movie.title }}</h2>
+                              <!-- <p>{{ movie.release_date }}</p> -->
+                              <!-- 평점 점수를 넣는건 어떨까 -->
+                              <p>{{ movie.popularity }}</p>
+                            </div>
+                          </div>
+                        </li>
                       {% endfor %}
                     </ul>
                 </div>
             </section>
-            <div class="row">
-                <section class="col-8 genres">
-                    <h2>여기 영화 장르마다 캐로젤 쓸거야</h2>
+
+            <section class="search-section">
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="What are you looking for?" aria-label="Search" style="width:400px; text-align: center;">
+                  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </section>
+
+            <div class="row sub-sections">
+                <section class="col-6 genres">
+                    <h2>장르별 영화</h2>
                     <!-- 장르별로 영화 구분해서 for문 돌려야 함 -->
                     <div class="col-6 genre">
                       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -73,37 +89,24 @@
                     </div>
                         
                 </section>
-                <section class="col-4">
-                    <div class="search-bar">
-                        <h2>검색</h2>
-                        <nav class="navbar navbar-light bg-light">
-                            <form class="form-inline">
-                              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                            </form>
-                          </nav>
-                    </div>
+
+                <section class="col-6">
                     <div class="movie-rank">
                         <h2>영화 평점 순위</h2>
                         <ul class="list-group">
-                            <li class="list-group-item active">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                          </ul>
+                            <li class="list-group-item">Cras justo odio</li>
+                            <li class="list-group-item">웅</li>
+                        </ul>
                     </div>
                     <div class="review-rank">
                         <h2>리뷰 좋아요 순위</h2>
                         <ul class="list-group">
                             <li class="list-group-item active">Cras justo odio</li>
-                            <li class="list-group-item">Dapibus ac facilisis in</li>
-                            <li class="list-group-item">Morbi leo risus</li>
-                            <li class="list-group-item">Porta ac consectetur ac</li>
-                            <li class="list-group-item">Vestibulum at eros</li>
-                          </ul>
+                            <li class="list-group-item">웅</li>
+                        </ul>
                     </div>
                 </section>
+
             </div>
         </div>
     </body>
