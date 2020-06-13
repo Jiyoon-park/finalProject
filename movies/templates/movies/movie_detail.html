@@ -39,18 +39,20 @@
       <div class="movie_info">
         <h2>plot</h2>
         <p>{{ movie.overview }}</p>
-        <button>genre</button>
-      </div>
-      <div class="recommend_movie">
-        <h2>같은 장르 영화 추천 할거야</h2>
-        <!-- 같은 장르 영화 세개정도 포문 돌려 추천 -->
-        {% for same_genre in same_genres %}
-        <p>{{same_genre.title}}</p>
+        {% for genre in movie.genres.all %}
+          <button>{{ genre }}</button>
         {% endfor %}
-        <div>
-          <img src="">
-          <p>title</p>
-        </div>
+      </div>
+      <div class="recommend-movie">
+        <h2>이 영화가 재밌으셨다면, TOP3(같은 장르 다른 영화3)</h2>
+          <div class="reccomend-movie-list row">
+            {% for same_genre in same_genres %}
+            <div class="col-4">
+              <img src="https://image.tmdb.org/t/p/original/{{ same_genre.poster_path}}" alt="movie-poster" style="width:100%;">
+              <p>{{same_genre.title}}</p>
+            </div>
+            {% endfor %}
+          </div>
       </div>
     </section>
     <section class="col-6">
