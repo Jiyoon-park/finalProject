@@ -1,0 +1,25 @@
+html, body {
+  height: 100%;
+}
+
+header {
+    height: 50%;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #fff;
+}
+
+.movie-info, .recommend-movies, .trailer, .review-list  {
+  margin-top: 3%;
+  padding: 15px 0;
+}
+
+.recommend-movie img {
+  border-radius: 5px;
+}

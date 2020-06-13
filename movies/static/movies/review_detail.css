@@ -1,0 +1,47 @@
+html, body {
+    height: 100%;
+}
+
+header {
+    height: 50%;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    position: relative;
+}
+
+.title {
+    position: absolute;
+    left: 270px;
+    bottom: 0;
+}
+
+.user {
+    position: absolute;
+    left: 100px;
+    bottom: -20%;
+    color: black;
+}
+
+.user .user-img {
+width: 150px;
+height: 150px;
+border: 3px solid #222;
+border-radius: 100%;
+background-color: white;
+}
+
+.review {
+width: 100%;
+height: 50%;
+background-color: grey;
+margin-top: 8%;
+border-radius: 5px;
+padding: 15px 30px;
+}
+
+.other-reviews {
+    margin-top: 3%;
+    padding: 0 5%;
+}
