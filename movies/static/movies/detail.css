@@ -35,6 +35,14 @@ header:before {
   padding: 15px 0;
 }
 
+.recommend-movie {
+  flex-basis: 180px;
+  transition: all 0.4s;
+}
+.recommend-movie:hover {
+  flex-basis: 190px;
+}
+
 .recommend-movie img {
   border-radius: 5px;
 }
