@@ -8,16 +8,39 @@ header {
     background-size: cover;
     color: #fff;
     text-align: center;
+    position: relative;
 }
 
-header h1 {
-  font-size: 2.5rem;
+header:before {
+  content: ' ';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 60%;
+  background: rgb(255,255,255);
+  background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(22,22,22,1) 100%);
+}
+
+.header-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   color: #fff;
 }
 
 .movie-info, .recommend-movies, .trailer, .review-list  {
   margin-top: 3%;
   padding: 15px 0;
+}
+
+.recommend-movie {
+  flex-basis: 180px;
+  transition: all 0.4s;
+}
+.recommend-movie:hover {
+  flex-basis: 190px;
 }
 
 .recommend-movie img {

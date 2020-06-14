@@ -1,0 +1,35 @@
+.wrapper {
+    min-height: 100vh;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.wrapper:before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,0) 15%, rgba(0,0,0,1) 100%);
+}
+
+.review-create-form {
+    position: absolute;
+}
+
+.review-create-form h1 {
+    text-align: center;
+}
+
+.review-create-form form {
+    width: 550px;
+    margin: 0 auto;
+}
