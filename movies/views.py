@@ -4,23 +4,66 @@ from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 
+import numpy as np
+import pandas as pd
+
 from .forms import ReviewForm
 
 # Create your views here.
 def welcome(request):
     return render(request, 'movies/welcome.html')
 
-def recommend():
-    # 추천알고리즘 적용할 함수
-    pass
+def pearsonR(s1, s2):
+    s1_c = s1 - s1.mean()
+    s2_c = s2 - s2.mean()
+    return np.sum(s1_c * s2_c) / np.sqrt(np.sum(s1_c ** 2) * np.sum(s2_c ** 2))
 
-def find_genre():
-    pass
+def recommend(Id):
+    # 추천알고리즘 적용할 함수
+    review = pd.DataFrame(data=Review.objects.all().values('user_id', 'movie_id', 'score'))
+    review = review.rename(columns={"user_id":"userId", "movie_id":"movieId"})
+    movie = pd.DataFrame(data=Movie.objects.all().values('id', 'original_title', 'original_language'))
+    movie = movie.rename(columns={"id":"movieId"})
+
+    movie.movieId = pd.to_numeric(movie.movieId, errors='coerce')
+    review.movieId = pd.to_numeric(review.movieId, errors='coerce')
+
+    data = pd.merge(review, movie, on='movieId', how='inner')
+
+    matrix = data.pivot_table(index='movieId', columns='userId', values='score')
+
+    result = []
+    
+    for side_id in matrix.columns:
+        
+        if side_id == Id:
+            continue
+
+        cor = pearsonR(matrix[Id], matrix[side_id])
+
+        if np.isnan(cor) or cor < 0:
+            continue
+        else:
+            result.append((side_id, cor))
+            
+    result.sort(key=lambda r: -r[1])
+    result = max(result, key=lambda r: -r[1])[0]
+
+    movies = Review.objects.filter(user_id=Id).values('movie_id')
+    movies = [value['movie_id'] for value in movies]
+
+    sim_movie = Review.objects.filter(user_id=result).values('movie_id')
+    
+    return [value['movie_id'] for value in sim_movie if value['movie_id'] not in movies]
 
 def index(request):
     movies = Movie.objects.all()[:5]
+    if request.user.is_authenticated:
+        r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
+    else: r_movies = []
     context = {
         'movies': movies,
+        'r_movies': r_movies
     }
     return render(request, 'movies/index.html', context)
 
