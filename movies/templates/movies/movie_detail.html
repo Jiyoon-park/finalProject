@@ -40,7 +40,7 @@
           <h2>plot</h2>
           <p>{{ movie.overview }}</p>
           {% for genre in movie.genres.all %}
-            <button>{{ genre }}</button>
+            <button class="btn btn-outline-info">{{ genre.name }}</button>
           {% endfor %}
         </div>
 

@@ -16,11 +16,21 @@
       justify-content: center;
       align-items: center;
     }
+
+    .wrapper h1 {
+        text-align: center;
+    }
+
+    .wrapper form {
+        width: 550px;
+        margin: 0 auto;
+    }
+
 </style>
 <div class="wrapper">
     <div class="review-create-form">
     <h1>{{ movie.title }}</h1>
-    <form action="" method="POST" style="width:400px">
+    <form action="" method="POST">
         {% csrf_token %}
         {% bootstrap_form form%}
         <button class="btn btn-primary text-center" style="width:100%">sumit</button>
