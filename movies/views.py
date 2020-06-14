@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 import numpy as np
 import pandas as pd
@@ -69,22 +70,26 @@ def index(request):
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    reviews = Review.objects.filter(movie_id=movie.pk)
+    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-pk')
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
     
     genres = Genre.objects.all()
 
-    g_movies = {
-        t.name: Movie.objects.filter(genres__in=t.id)
-        for t in genres
-    }
-    
+    # g_movies = {
+    #     t.name: Movie.objects.filter(genres__in=t.id)
+    #     for t in genres
+    # }
+    paginator = Paginator(reviews,5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
-        'g_movies': g_movies,
+        # 'g_movies': g_movies,
+        'page_obj': page_obj,
     }
     # 베스트 리뷰, 일반 리뷰
     return render(request, 'movies/movie_detail.html', context)

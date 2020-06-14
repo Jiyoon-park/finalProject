@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # pip install
     'bootstrap4',
     'django_extensions',
+    'bootstrap_pagination',
 
     # apps
     'accounts',

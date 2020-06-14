@@ -23,3 +23,21 @@ header h1 {
 .recommend-movie img {
   border-radius: 5px;
 }
+
+.review-list {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-content {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+  height: 50px;
+}
+
