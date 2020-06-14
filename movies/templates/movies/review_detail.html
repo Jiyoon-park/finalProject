@@ -1,42 +1,89 @@
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
+{% block title %}review-datail{% endblock %}
+
+{% block CSS %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'movies/review_detail.css' %}" />
+{% endblock %}
 
 {% block body %}
 <style>
   header {
-    padding-top: 20%;
     background-image: url('https://image.tmdb.org/t/p/original/{{ review.movie.backdrop_path }}');
-    background-position: center;
-    background-size: cover;
-    color: #fff;
-    text-align: center;
   }
 </style>
 
-  <header>
+  <header class="d-flex flex-column">
+    <nav class="mt-2 px-2">
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'movies:index' %}"><button class="btn btn-primary">Home</button></a>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <a href="#"><button class="btn btn-primary">아무버튼</button></a>
+      </div>
+    </nav>
+    <div class="user">
+      <div class="user-img"></div>
+      <!-- <p>{{ review.user.username }}</p> -->
+    </div>
+    
+    <h3 class="title">{{ review.movie.title }}</h3>
   </header>
+
+  
   <section>
-    <h3>영화 {{ review.movie.title }}</h3>
-    <p>{{ review.content }}</p>
+    <div class="container">
+      <div class="row">
+        <div class="review col-6">
+          <p>{{ review.content }}</p>
+          {% if request.user != review.user %}
+          {% with review_like_users=review.like_users.all %}
+          <form action="{% url 'movies:like' review.pk %}">
+              {% if request.user in review_like_users %}
+                <button>좋아요 취소</button>
+              {% else %}
+                <button>좋아요</button>
+              {% endif %}
+          </form>
+          <p>{{ review_like_users|length }} 명이 좋아합니다. </p>
+          {% endwith %}
+          {% endif %}
+          {% if request.user == review.user %}
+              <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
+                  {% csrf_token %}
+                  <button>삭제하기</button>
+              </form>
+              <a href="{% url 'movies:review_update' review.pk %}">수정하기</a>
+          {% endif %}
+        </div>
+        <div class="other-reviews col-6">
+          <h2>작가의 다른 리뷰</h2>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">movie title</th>
+                  <th scope="col">created_at</th>
+                </tr>
+              </thead>
+              {% for review in movie.review_set.all %}
+                  <tbody>
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <th scope="row"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.created_at }}</a></th>
+                    </tr>
+                  </tbody>
+              {% endfor %}
+            </table>
+        </div>
+      </div>
+    </div>
+    
   </section>
   
-  {% if request.user != review.user %}
-  {% with review_like_users=review.like_users.all %}
-  <form action="{% url 'movies:like' review.pk %}">
-      {% if request.user in review_like_users %}
-        <button>좋아요 취소</button>
-      {% else %}
-        <button>좋아요</button>
-      {% endif %}
-  </form>
-  <p>{{ review_like_users|length }} 명이 좋아합니다. </p>
-  {% endwith %}
-  {% endif %}
-  {% if request.user == review.user %}
-      <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
-          {% csrf_token %}
-          <button>삭제하기</button>
-      </form>
-      <a href="{% url 'movies:review_update' review.pk %}">수정하기</a>
-  {% endif %}
+
 {% endblock %}
