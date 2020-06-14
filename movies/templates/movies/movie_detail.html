@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load bootstrap_pagination %}
 
 {% block title %}movie-datail{% endblock %}
 
@@ -27,6 +28,14 @@
         <a href="{% url 'movies:review_create' movie.pk %}"><button class="btn btn-primary">Create</button></a>
     </nav>
     <div class="mt-auto">
+      <div class="details">
+        {% if movie.adult%}
+          <span class="btn btn-danger">청소년관람불가</span>
+        {% else %}
+          <span class="btn btn-success">전체관람가</span>
+        {% endif %}
+        <span class="btn btn-secondary">{{ movie.original_language }}</span>
+      </div>
       <h1>{{ movie.title }}</h1>
       <p>{{ movie.release_date }}</p>
     </div>
@@ -39,9 +48,11 @@
         <div class="movie-info">
           <h2>plot</h2>
           <p>{{ movie.overview }}</p>
-          {% for genre in movie.genres.all %}
-            <button class="btn btn-outline-info">{{ genre.name }}</button>
-          {% endfor %}
+          <div>
+            {% for genre in movie.genres.all %}
+              <button class="btn btn-outline-info">{{ genre.name }}</button>
+            {% endfor %}
+          </div>
         </div>
 
         <div class="recommend-movies">
@@ -62,26 +73,31 @@
           <h2>trailer</h2>
           <p>여기에 trailer</p>
         </div>
-        <div class="review-list">
-          <h2>REVIEW</h2>
+        <div class="review-list-container">
+          <h2>reviews</h2>
+          <div class="review-list">
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">Title</th>
-                  <th scope="col">작성자</th>
+                  <th scope="col">score</th>
+                  <th scope="col">content</th>
+                  <th scope="col">username</th>
                 </tr>
               </thead>
-              {% for review in movie.review_set.all %}
+              {% for review in page_obj %}
                   <tbody>
                     <tr>
-                      <td>{{ forloop.counter }}</td>
-                      <th scope="row"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.content }}</a></th>
-                      <th>{{ review.user.username }}</th>
+                      <td scope="row">{{ forloop.counter }}</td>
+                      <th scope="row">{{ review.score }}</th>
+                      <th scope="row" class="review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.content }}</a></th>
+                      <th scope="row">{{ review.user.username }}</th>
                     </tr>
                   </tbody>
               {% endfor %}
             </table>
+            {% bootstrap_paginate page_obj range=5 show_prev_next="false" show_first_last="true" %}
+          </div>
         </div>
       </section>
     </div>
