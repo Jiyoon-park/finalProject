@@ -22,10 +22,10 @@
                 <h1>Recommended</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
-                      {% for movie in r_movies %} 
+                      {% for movie in movies %} 
                         <li class="recommend-movie">
                           <div class="recommend-movie-detail">
-                            <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster"></a>
+                            <img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster">
                             <div class="detail-contents">
                               <h2>{{ movie.title }}</h2>
                               <!-- <p>{{ movie.release_date }}</p> -->
@@ -40,9 +40,9 @@
             </section>
 
             <section class="search-section">
-                <form class="form-inline my-2 my-lg-0">
-                  <input class="form-control mr-sm-2" type="search" placeholder="What are you looking for?" aria-label="Search" style="width:400px; text-align: center;">
-                  <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
+                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="What are you looking for?" aria-label="Search" style="width:400px; text-align: center;">
+                  <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
                 </form>
             </section>
 

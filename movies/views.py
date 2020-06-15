@@ -3,7 +3,8 @@ from django.views.decorators.http import require_POST
 from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
-from django.core.paginator import Paginator
+
+from django.db.models import Sum, F, Avg, Count, Q
 
 import numpy as np
 import pandas as pd
@@ -58,38 +59,48 @@ def recommend(Id):
     return [value['movie_id'] for value in sim_movie if value['movie_id'] not in movies]
 
 def index(request):
+
     movies = Movie.objects.all()[:5]
     if request.user.is_authenticated:
         r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
     else: r_movies = []
+
+    s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:10]
+
+    like_review = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:10]
+
+    genres = Genre.objects.all()
+    g_movies = []
+    for t in genres:
+        g_movies.append({
+            t.name: Movie.objects.filter(genres__in=[t.id])[:5]
+        })
+
     context = {
         'movies': movies,
-        'r_movies': r_movies
+        'r_movies': r_movies,
+        'g_movies': g_movies,
+        's_movies': s_movies,
+        'like_review': like_review,
     }
     return render(request, 'movies/index.html', context)
 
+def search(request):
+    search = request.GET.get('search')
+    movies = Movie.objects.filter(Q(title__icontains=search) | Q(overview__icontains=search))
+    context = {'search': search, 'movies':movies}
+    return render(request, 'movies/search.html', context)
+
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-pk')
+    reviews = Review.objects.filter(movie_id=movie.pk)
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
     
-    genres = Genre.objects.all()
-
-    # g_movies = {
-    #     t.name: Movie.objects.filter(genres__in=t.id)
-    #     for t in genres
-    # }
-    paginator = Paginator(reviews,5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
-        # 'g_movies': g_movies,
-        'page_obj': page_obj,
     }
     # 베스트 리뷰, 일반 리뷰
     return render(request, 'movies/movie_detail.html', context)
