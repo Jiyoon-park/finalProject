@@ -68,7 +68,7 @@ def index(request):
 
     movies = Movie.objects.all()[:5]
     if request.user.is_authenticated:
-        if Review.objects.filter(user_id=request.user.id):
+        if Review.objects.filter(user_id=request.user.id).count():
             r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
         else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
     else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
@@ -109,13 +109,13 @@ def movie_detail(request, movie_pk):
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
     
-    search_input = movie.title+' trailer'
+    # search_input = movie.title+' trailer'
 
-    data = requests.get(API_URL+f'?key={YOUTUBE_API_KEY}&part=snippet&type=video&q={search_input}').json()
+    # data = requests.get(API_URL+f'?key={YOUTUBE_API_KEY}&part=snippet&type=video&q={search_input}').json()
 
-    a = {'items': data['items']}
-    b = a['items'][0]['id']['videoId']
-    videoUrl = f'https://youtube.com/embed/{b}?&autoplay=1'
+    # a = {'items': data['items']}
+    # b = a['items'][0]['id']['videoId']
+    # videoUrl = f'https://youtube.com/embed/{b}?&autoplay=1'
 
     best_review = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3]
     reviews = Review.objects.filter(movie_id=movie.pk).order_by('-pk')
@@ -130,7 +130,7 @@ def movie_detail(request, movie_pk):
         'same_genres': same_genres,
         'reviews': reviews,
         'best_review' : best_review,
-        'videoUrl': videoUrl,
+        # 'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
     return render(request, 'movies/movie_detail.html', context)
