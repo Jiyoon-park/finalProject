@@ -118,6 +118,7 @@ def movie_detail(request, movie_pk):
     # b = a['items'][0]['id']['videoId']
     # videoUrl = f'https://youtube.com/embed/{b}'
 
+
     reviews = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3] | Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
     paginator = Paginator(reviews,5)
     page_number = request.GET.get('page')
@@ -127,6 +128,7 @@ def movie_detail(request, movie_pk):
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
+
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
