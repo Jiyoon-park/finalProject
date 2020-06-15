@@ -5,21 +5,57 @@
 
 {% block body %}
 <style>
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
+h1, button, a, p {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: url("/static/images/signup3.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 100vh;
+}
+
+body:before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,0) 15%, rgba(0,0,0,1) 100%);
+}
+
+.wrapper {
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.home-btn {
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+}
 </style>
 
-<div class="wrapper">
-    <h1>signup</h1>
-    <form action="" method="POST" style="width:400px">
-        {% csrf_token %}
-        {% bootstrap_form form%}
-        <button class="btn btn-primary text-center" style="width:100%">sumit</button>
-    </form>
-</div>
+<body>
+    <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">Home</button></a>
+    <div class="wrapper">
+        <h1>signup</h1>
+        <form action="" method="POST" style="width:400px">
+            {% csrf_token %}
+            {% bootstrap_form form%}
+            <button class="btn btn-info text-center" style="width:100%">sumit</button>
+        </form>
+    </div>
+</body>
 {% endblock %}
