@@ -5,16 +5,12 @@ body {
 }
 
 /* 초기화 */
-body, h1, h2, h3, ul, p, input {
+body, h1, h3, h5, p, input {
     margin: 0;
     padding: 0;
 }
 
-li {
-    list-style-type: none;
-}
-
-h1, h2, h3 {
+h1, h3, h5 {
     font-size: 100%;
     font-weight: normal;
 }
@@ -33,6 +29,38 @@ header h1 {
 .search-section {
     display: flex;
     justify-content: center;
-    margin-top: 5%;
-    margin-bottom: 0;
+    margin: 5% 0;
+}
+
+/* 검색 결과 */
+.target {
+    color: #fff;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 5%;
+}
+
+.target span {
+    border: none;
+    border-radius: 5px;
+    background-color: green;
+    padding: 5px 10px;
+}
+
+/* 검색 결과 포스터 */
+.search-movie {
+    flex-basis: 180px;
+    transition: all 0.4s;
+    margin-top: 1rem;
+}
+.search-movie:hover {
+    flex-basis: 190px;
+}
+
+.search-movie img {
+    border-radius: 5px;
+}
+
+.search-result span {
+    color: #fff;
 }

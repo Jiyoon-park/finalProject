@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
 
     # pip install
     'bootstrap4',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'accounts',
     'movies',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
