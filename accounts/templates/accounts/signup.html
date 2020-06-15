@@ -48,8 +48,8 @@ body:before {
 </style>
 
 <body>
+    <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">Home</button></a>
     <div class="wrapper">
-        <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">Home</button></a>
         <h1>signup</h1>
         <form action="" method="POST" style="width:400px">
             {% csrf_token %}

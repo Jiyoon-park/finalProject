@@ -21,9 +21,9 @@
     <nav class="mt-3 px-2">
       <div class="d-flex justify-content-between">
         <a href="{% url 'movies:index' %}"><button class="btn btn-primary">Home</button></a>
-        <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
-          <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
+        <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
         </form>
         <a href="{% url 'movies:review_create' movie.pk %}"><button class="btn btn-primary">Create</button></a>
     </nav>
@@ -73,7 +73,7 @@
       <section class="col-6">
         <div class="trailer">
           <h2>trailer</h2>
-          <iframe id="encoder_iframe" height=400px; width="100%" src="{{ videoUrl }}" class="movie-trailer"></iframe>
+          <p>여기에 trailer</p>
         </div>
         <div class="review-list-container">
           <h2>reviews</h2>
