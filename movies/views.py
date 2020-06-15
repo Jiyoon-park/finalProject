@@ -11,6 +11,11 @@ import pandas as pd
 
 from .forms import ReviewForm
 
+import requests
+
+API_URL = 'https://www.googleapis.com/youtube/v3/search'
+YOUTUBE_API_KEY = 'AIzaSyCbyoE7tQ4FtqptLIw63gfRZsA_9JQKkbc'
+
 # Create your views here.
 def welcome(request):
     return render(request, 'movies/welcome.html')
@@ -67,7 +72,6 @@ def index(request):
         else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
     else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
 
-
     s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:10]
 
     like_review = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:10]
@@ -100,10 +104,19 @@ def movie_detail(request, movie_pk):
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
     
+    search_input = movie.title+' trailer'
+
+    data = requests.get(API_URL+f'?key={YOUTUBE_API_KEY}&part=snippet&type=video&q={search_input}').json()
+
+    a = {'items': data['items']}
+    b = a['items'][0]['id']['videoId']
+    videoUrl = f'https://youtube.com/embed/{b}'
+
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
+        'videoUrl': videoUrl,
     }
     # 베스트 리뷰, 일반 리뷰
     return render(request, 'movies/movie_detail.html', context)
