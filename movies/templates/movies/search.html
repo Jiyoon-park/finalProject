@@ -5,10 +5,8 @@
 
 {% block CSS %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'movies/index.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'movies/search.css' %}" />
 <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -23,11 +21,31 @@
                   <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
                 </form>
             </section>
-
-            <!-- 여기에 검색된 영화들 나열하면 될 듯 -->
-            {% for movie in movies%}
-            <p>{{ movie.title }}</p>
-            {% endfor %}
+            <div class="container">
+                <!-- 여기에 검색된 영화들 나열하면 될 듯 -->
+                <h3>{{ search }} 로 검색한 결과입니다.</h3>
+                <div class="search-result row">
+                    <div class="in-title col-6">
+                        {% for movie_title in movies_title %}
+                            {% if movie_title %}
+                                <p>{{ movie_title.title }}</p>
+                            {% else %}
+                                <p>그런거는 없어</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div> 
+                    
+                    <div class="in-content col-6">
+                        {% for movie_overview in movies_overview %}
+                            {% if movie_overview %}
+                                <p>{{ movie_overview.title }}</p>
+                            {% else %}
+                                <p>그런거는 없어</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 {% endblock %}
