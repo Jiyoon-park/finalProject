@@ -95,13 +95,17 @@ def index(request):
 
 def search(request):
     search = request.GET.get('search')
-    movies = Movie.objects.filter(Q(title__icontains=search) | Q(overview__icontains=search))
-    context = {'search': search, 'movies':movies}
+    movies_title = Movie.objects.filter(title__icontains=search)[:5]
+    movies_overview = Movie.objects.filter(overview__icontains=search)[:5]
+    context = {
+        'search': search,
+        'movies_title': movies_title,
+        'movies_overview': movies_overview,
+    }
     return render(request, 'movies/search.html', context)
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-pk')
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
     
@@ -111,12 +115,15 @@ def movie_detail(request, movie_pk):
 
     a = {'items': data['items']}
     b = a['items'][0]['id']['videoId']
-    videoUrl = f'https://youtube.com/embed/{b}'
+    videoUrl = f'https://youtube.com/embed/{b}?&autoplay=1'
 
     paginator = Paginator(reviews,5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
+    best_review = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3]
+    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
+
     context = {
         'movie': movie,
         'same_genres': same_genres,
@@ -124,7 +131,6 @@ def movie_detail(request, movie_pk):
         'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
-    # 베스트 리뷰, 일반 리뷰
     return render(request, 'movies/movie_detail.html', context)
 
 def review_create(request, movie_pk):
@@ -148,8 +154,10 @@ def review_create(request, movie_pk):
 
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    other_review = Review.objects.filter(pk=review.user_id).exclude(id=review.id)
     context = {
         'review': review,
+        'other_review': other_review,
     }
     return render(request, 'movies/review_detail.html', context)
 
