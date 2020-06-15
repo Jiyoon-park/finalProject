@@ -64,3 +64,6 @@ header:before {
   height: 50px;
 }
 
+.movie-trailer {
+  border: none;
+}
