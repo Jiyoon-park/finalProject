@@ -129,7 +129,6 @@ def movie_detail(request, movie_pk):
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
-        'best_review' : best_review,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
@@ -156,10 +155,14 @@ def review_create(request, movie_pk):
 
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
-    other_review = Review.objects.filter(pk=review.user_id).exclude(id=review.id)
+    other_reviews = Review.objects.filter(pk=review.user_id).exclude(id=review.id)
+    paginator = Paginator(other_reviews,5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'review': review,
-        'other_review': other_review,
+        'other_reviews': other_reviews,
+        'page_obj': page_obj,
     }
     return render(request, 'movies/review_detail.html', context)
 
