@@ -62,8 +62,11 @@ def index(request):
 
     movies = Movie.objects.all()[:5]
     if request.user.is_authenticated:
-        r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
-    else: r_movies = []
+        if Review.objects.filter(user_id=request.user.id):
+            r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
+        else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
+    else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
+
 
     s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:10]
 
