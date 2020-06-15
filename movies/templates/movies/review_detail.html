@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load bootstrap_pagination %}
 
 {% block title %}review-datail{% endblock %}
 
@@ -62,25 +63,32 @@
           {% endif %}
         </div>
         </div>
+
         <div class="other-reviews col-6">
-          <h2>작가의 다른 리뷰</h2>
+          <h2>{{ review.user.username }}님의 다른 리뷰</h2>
+          <div class="review-list">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">movie title</th>
-                  <th scope="col">created_at</th>
+                  <th scope="col"></th>
+                  <th scope="col">score</th>
+                  <th scope="col">movie-title</th>
+                  <th scope="col">date</th>
                 </tr>
               </thead>
-              {% for review in movie.review_set.all %}
+              {% for review in page_obj %}
                   <tbody>
                     <tr>
-                      <td>{{ forloop.counter }}</td>
-                      <th scope="row"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.created_at }}</a></th>
+                      <td scope="row">{{ forloop.counter }}</td>
+                      <th scope="row">{{ review.score }}</th>
+                      <th scope="row" class="review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.movie.title }}</a></th>
+                      <th scope="row">{{ review.created_at }}</th>
                     </tr>
                   </tbody>
               {% endfor %}
             </table>
+            {% bootstrap_paginate page_obj range=5 show_prev_next="false" show_first_last="true" %}
+          </div>
         </div>
       </div>
     </div>
