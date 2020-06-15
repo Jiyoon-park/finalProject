@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 
@@ -49,11 +50,11 @@ def recommend(Id):
 
         cor = pearsonR(matrix[Id], matrix[side_id])
 
-        if np.isnan(cor) or cor < 0:
-            continue
+        if np.isnan(cor):
+            result.append((side_id, 0))
         else:
             result.append((side_id, cor))
-            
+
     result.sort(key=lambda r: -r[1])
     result = max(result, key=lambda r: -r[1])[0]
 
@@ -68,7 +69,7 @@ def index(request):
 
     movies = Movie.objects.all()[:5]
     if request.user.is_authenticated:
-        if Review.objects.filter(user_id=request.user.id):
+        if Review.objects.filter(user_id=request.user.id).count():
             r_movies = Movie.objects.filter(id__in=recommend(request.user.id)).order_by('-popularity')[:5]
         else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
     else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
@@ -95,8 +96,8 @@ def index(request):
 
 def search(request):
     search = request.GET.get('search')
-    movies_title = Movie.objects.filter(title__icontains=search)[:5]
-    movies_overview = Movie.objects.filter(overview__icontains=search)[:5]
+    movies_title = Movie.objects.filter(title__icontains=search)[:5] | Movie.objects.filter(original_title__icontains=search)[:5]
+    movies_overview = Movie.objects.filter(overview__icontains=search)[:10]
     context = {
         'search': search,
         'movies_title': movies_title,
@@ -113,22 +114,20 @@ def movie_detail(request, movie_pk):
 
     data = requests.get(API_URL+f'?key={YOUTUBE_API_KEY}&part=snippet&type=video&q={search_input}').json()
 
-    a = {'items': data['items']}
-    b = a['items'][0]['id']['videoId']
-    videoUrl = f'https://youtube.com/embed/{b}?&autoplay=1'
+    # a = {'items': data['items']}
+    # b = a['items'][0]['id']['videoId']
+    # videoUrl = f'https://youtube.com/embed/{b}'
 
+    reviews = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3] | Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
     paginator = Paginator(reviews,5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    
-    best_review = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3]
-    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
 
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
-        'videoUrl': videoUrl,
+        # 'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
     return render(request, 'movies/movie_detail.html', context)
@@ -184,13 +183,21 @@ def review_update(request, review_pk):
     else:
         return redirect('movies:review_detail', review.pk)
 
+@login_required
 def like(request, review_pk):
     user = request.user
     review = get_object_or_404(Review, pk=review_pk)
 
     if review.like_users.filter(id=user.pk).exists():
         review.like_users.remove(user)
+        success = False
     else:
         review.like_users.add(user)
+        success = True
     
-    return redirect('movies:review_detail', review_pk)
+    data = {
+        'success': success,
+        'count': review.like_users.count(),
+    }
+
+    return JsonResponse(data)
