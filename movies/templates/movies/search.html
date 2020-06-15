@@ -22,27 +22,41 @@
                 </form>
             </section>
             <div class="container">
-                <!-- 여기에 검색된 영화들 나열하면 될 듯 -->
-                <h3>{{ search }} 로 검색한 결과입니다.</h3>
+                <div class="target">
+                    <h3><span>{{ search }}</span> (으)로 검색한 결과입니다.</h3>
+                </div>
                 <div class="search-result row">
                     <div class="in-title col-6">
-                        {% for movie_title in movies_title %}
-                            {% if movie_title %}
-                                <p>{{ movie_title.title }}</p>
+                        {% if movies_title %}
+                        <h3>* 제목에 <span>{{ search }}</span> 가 포함된 영화가 <span>{{ movies_title|length }}</span> 개 검색되었습니다.</h5>
+                            <div class="row">
+                            {% for movie_title in movies_title %}
+                                <div class="search-movie col-4">
+                                    <img src="https://image.tmdb.org/t/p/original/{{ movie_title.poster_path}}" alt="" style="width:100%;">
+                                    <p>{{ movie_title.title }}</p>
+                                </div>
+                            {% endfor %}
+                            </div>
                             {% else %}
-                                <p>그런거는 없어</p>
-                            {% endif %}
-                        {% endfor %}
+                            <p>* 제목에 <span>{{ search }}</span> 가 포함된 영화가 존재하지 않습니다.</p>
+                        {% endif %}
+                        
                     </div> 
                     
                     <div class="in-content col-6">
-                        {% for movie_overview in movies_overview %}
-                            {% if movie_overview %}
-                                <p>{{ movie_overview.title }}</p>
+                        {% if movies_overview %}
+                        <h3>* 내용에 <span>{{ search }}</span> 가 포함된 영화가 <span>{{ movies_overview|length }}</span> 개 검색되었습니다.</h5>
+                            <div class="row">
+                            {% for movie_overview in movies_overview %}
+                                <div class="search-movie col-4">
+                                    <img src="https://image.tmdb.org/t/p/original/{{ movie_overview.poster_path}}" alt="" style="width:100%;">
+                                    <p>{{ movie_overview.title }}</p>
+                                </div>
+                            {% endfor %}
+                            </div>
                             {% else %}
-                                <p>그런거는 없어</p>
-                            {% endif %}
-                        {% endfor %}
+                            <p>* 내용에 <span>{{ search }}</span> 가 포함된 영화가 존재하지 않습니다.</p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
