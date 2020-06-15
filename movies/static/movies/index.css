@@ -145,7 +145,18 @@ header h1 {
     height: 600px;
 }
 
-.genre {
+.genre-movies {
     box-sizing: border-box;
-    height: 150px;
+    height: 100%;
+}
+
+.rank {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.rank-item:hover {
+    background-color: #999;
+    color: white;
 }
