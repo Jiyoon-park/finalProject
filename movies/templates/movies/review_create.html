@@ -12,13 +12,6 @@
     .wrapper {
       background-image: url('https://image.tmdb.org/t/p/original/{{ movie.backdrop_path }}');
     }
-
-    .home-btn {
-        position: absolute;
-        top: 1rem;
-        left: 0.5rem;
-    }
-
 </style>
 <div class="wrapper">
     <a href="{% url 'movies:movie_detail' movie.id %}"><button class="btn btn-primary home-btn">Back</button></a>

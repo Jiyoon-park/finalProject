@@ -3,30 +3,100 @@
 
 {% block title %}login{% endblock %}
 
-{% block body %}
-<style>
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        min-height: 100vh;
-    }
-</style>
+{% block CSS %}
+{% load static %}
+<!-- <link rel="stylesheet" type="text/css" href="{% static 'accounts/login.css' %}" /> -->
+{% endblock %}
 
-<div class="wrapper">
-    <h1>Login</h1>
-    <form action="" method="POST" style="width:400px">
-        {% csrf_token %}
-        {% bootstrap_form form%}
-        <button class="btn btn-primary text-center" style="width:100%">sumit</button>
-    </form>
-    <div>
-        <p>아이디가 없으신가요?</p>
-        <a href="{% url 'accounts:signup' %}"><button>signup</button></a>
+{% block body %}
+
+<style>
+h1, button, a, p {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: url("/static/images/signup3.jpg") no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 100vh;
+}
+
+body:before {
+    content: ' ';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,0) 15%, rgba(0,0,0,1) 100%);
+}
+
+.wrapper {
+    position: absolute;
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.wrapper .signup {
+    margin: 10px 0;
+    text-align: center;
+    color: white;
+}
+
+.wrapper .signup a {
+    text-decoration: none;
+    color: white;
+}
+
+.wrapper .all-auth {
+    text-align: center;
+}
+
+.wrapper .all-auth .all-auth-bnts {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.naver-btn, .google-btn {
+    margin: 0 5px;
+}
+
+.home-btn {
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+}
+
+</style>
+<body>
+    <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">Home</button></a>
+    <div class="wrapper">
+        <h1>Login</h1>
+        <form action="" method="POST" style="width:400px">
+            {% csrf_token %}
+            {% bootstrap_form form%}
+            <button class="btn btn-info text-center" style="width:100%">sumit</button>
+        </form>
+        <div class="signup">
+            <p>아이디가 없으신가요?</p>
+            <a href="{% url 'accounts:signup' %}">회원가입</a>
+        </div>
+        <div class="all-auth">
+            <p>사용하고 계신 계정으로 로그인해보세요!</p>
+            <div class="all-auth-bnts">
+                <button class="btn btn-success naver-btn">naver</button>
+                <button class="btn btn-primary google-btn">google</button>
+            </div>
+        </div>
     </div>
-    <div>
-        <p>여기 allauth 만들기 / naver, google</p>
-    </div>
-</div>
+</body>
 {% endblock %}

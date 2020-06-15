@@ -3,6 +3,7 @@ from django.views.decorators.http import require_POST
 from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.core.paginator import Paginator
 
 from django.db.models import Sum, F, Avg, Count, Q
 
@@ -68,9 +69,9 @@ def index(request):
     else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
 
 
-    s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:10]
+    s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:5]
 
-    like_review = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:10]
+    like_reviews = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:5]
 
     genres = Genre.objects.all()
     g_movies = []
@@ -84,7 +85,7 @@ def index(request):
         'r_movies': r_movies,
         'g_movies': g_movies,
         's_movies': s_movies,
-        'like_review': like_review,
+        'like_reviews': like_reviews,
     }
     return render(request, 'movies/index.html', context)
 
@@ -96,14 +97,19 @@ def search(request):
 
 def movie_detail(request, movie_pk):
     movie = get_object_or_404(Movie, pk=movie_pk)
-    reviews = Review.objects.filter(movie_id=movie.pk)
+    reviews = Review.objects.filter(movie_id=movie.pk).order_by('-pk')
     # 같은 장르의 평점 높은 영화
     same_genres = Movie.objects.filter(genres__in=movie.genres.all()).distinct().order_by('-popularity')[:3]
+    
+    paginator = Paginator(reviews,5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
+        'page_obj': page_obj,
     }
     # 베스트 리뷰, 일반 리뷰
     return render(request, 'movies/movie_detail.html', context)

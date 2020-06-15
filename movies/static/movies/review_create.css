@@ -33,3 +33,9 @@
     width: 550px;
     margin: 0 auto;
 }
+
+.home-btn {
+    position: absolute;
+    top: 1rem;
+    left: 0.5rem;
+}
