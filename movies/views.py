@@ -129,7 +129,6 @@ def movie_detail(request, movie_pk):
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
-        'best_review' : best_review,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
     }
