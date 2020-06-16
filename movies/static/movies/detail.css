@@ -2,6 +2,22 @@ html, body {
   height: 100%;
 }
 
+body, h1, h2, h4, p {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
 header {
     height: 50%;
     background-position: center;
@@ -24,7 +40,7 @@ header:before {
 
 .header-bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 5%;
   left: 0;
   right: 0;
   color: #fff;
@@ -64,6 +80,9 @@ header:before {
   height: 50px;
 }
 
-.movie-trailer {
-  border: none;
+.best-review {
+  background-color: rgba(255, 0, 0, 0.808);
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 7px;
 }

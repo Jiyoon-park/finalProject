@@ -28,9 +28,7 @@
                             <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster"></a>
                             <div class="detail-contents">
                               <h2>{{ movie.title }}</h2>
-                              <!-- <p>{{ movie.release_date }}</p> -->
-                              <!-- 평점 점수를 넣는건 어떨까 -->
-                              <p>{{ movie.popularity }}</p>
+                              <p>{{ movie.original_title }}</p>
                             </div>
                           </div>
                         </li>
