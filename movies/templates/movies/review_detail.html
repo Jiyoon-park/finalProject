@@ -106,8 +106,10 @@
         .then( response => {
           if (response.data.success) {
             event.target.innerText = '좋아요 취소'
+            heart[0].style.color = "crimson"
           } else {
             event.target.innerText = '좋아요'
+            heart[0].style.color = "grey"
           }
           document.querySelector(`#like-count-${reviewId}`).innerText = response.data.count + '명이 이 글을 좋아합니다.'
         })
