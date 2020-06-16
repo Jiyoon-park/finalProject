@@ -59,21 +59,21 @@
           </div>
           
           <div class="review-contents">
-            <p>{{ review.score }}</p>
+            <p><span class="movie-score">영화평점</span> {{ review.score }}점</p>
             <p>{{ review.content }}</p>
-            
+            <div class="UD-buttons">
+              {% if request.user == review.user %}
+                  <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
+                      {% csrf_token %}
+                      <button class="btn btn-danger mr-2">삭제</button>
+                  </form>
+                  <a href="{% url 'movies:review_update' review.pk %}" class="btn btn-warning">수정</a>
+              {% endif %}
+            </div>
           </div>
          
           
-          <div class="UD-buttons">
-          {% if request.user == review.user %}
-              <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
-                  {% csrf_token %}
-                  <button class="btn btn-danger mr-2">삭제</button>
-              </form>
-              <a href="{% url 'movies:review_update' review.pk %}" class="btn btn-warning">수정</a>
-          {% endif %}
-        </div>
+          
         </div>
 
         <div class="other-reviews col-5">

@@ -19,6 +19,7 @@ h1, h2, h3 {
     font-weight: normal;
 }
 
+/* 로고 */
 header {
     display: flex;
     flex-direction: column;
@@ -31,15 +32,7 @@ header img {
     margin-bottom: 3%;
     width: 20rem;
 }
-/* 로고 */
-/* header h1 {
-    font-size: 3rem;
-    line-height: 2;
-    font-style: italic;
-    font-family: 'Permanent Marker', cursive;
-    margin-top: 100px;
-    margin-bottom: 50px;
-} */
+
 
 /* recommend-movie-section */
 .main-section {
@@ -53,7 +46,8 @@ header img {
     margin-bottom: 10px;
     font-family: 'East Sea Dokdo', cursive;
     /* color: #5758BB; */
-    color: #82ccdd;
+    /* color: #82ccdd; */
+    color: darkcyan;
 }
 
 .main-section .wrapper {
@@ -166,6 +160,7 @@ header img {
 
 .genre-title {
     color: #fff;
+    font-size: 1rem;
     font-weight: bold;
     margin-top: 3%;
 }
