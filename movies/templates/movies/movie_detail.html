@@ -24,7 +24,9 @@
           <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-info my-2 my-sm-0">Search</button>
         </form>
+        {% if able %}
         <a href="{% url 'movies:review_create' movie.pk %}"><button class="btn btn-primary">리뷰작성</button></a>
+        {% endif %}
     </nav>
     <div class="header-bottom">
       <div class="mt-auto">
