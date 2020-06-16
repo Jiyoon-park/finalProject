@@ -23,22 +23,26 @@
         <a href="{% url 'movies:index' %}"><button class="btn btn-primary">Home</button></a>
         <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
           <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
+          <button class="btn btn-info my-2 my-sm-0">Search</button>
         </form>
         <a href="{% url 'movies:review_create' movie.pk %}"><button class="btn btn-primary">Create</button></a>
     </nav>
     <div class="header-bottom">
       <div class="mt-auto">
         <div class="details">
-          {% if movie.adult%}
-            <span class="btn btn-danger">청소년관람불가</span>
-          {% else %}
-            <span class="btn btn-success">전체관람가</span>
-          {% endif %}
-          <span class="btn btn-secondary">{{ movie.original_language }}</span>
+          <div class="buttons">
+            {% if movie.adult%}
+              <span class="R-rated">청소년관람불가</span>
+            {% else %}
+              <span class="G-rated">전체관람가</span>
+            {% endif %}
+            <span class="language">{{ movie.original_language }}</span>
+          </div>
         </div>
-        <h1>{{ movie.title }}</h1>
-        <h3>{{ movie.original_title }}</h3>
+        <div class="titles">
+          <h1>{{ movie.title }}</h1>
+          <h3>{{ movie.original_title }}</h3>
+        </div>
         <p>{{ movie.release_date }}</p>
       </div>
     </div>
@@ -49,17 +53,18 @@
     <div class="row">
       <section class="col-6">
         <div class="movie-info">
-          <h2>plot</h2>
-          <p>{{ movie.overview }}</p>
-          <div>
+          <h2>줄거리</h2>
+          <p class="movie-overview">{{ movie.overview }}</p>
+          <div class="movie-genres">
+            <p>영화장르</p>
             {% for genre in movie.genres.all %}
-              <button class="btn btn-outline-info">{{ genre.name }}</button>
+              <span class="movie-genre">{{ genre.name }}</span>
             {% endfor %}
           </div>
         </div>
 
         <div class="recommend-movies">
-          <h2>TOP3(같은 장르 다른 영화3)</h2>
+          <h2>같은 장르 TOP3</h2>
             <div class="recommend-movie-list row">
               {% for same_genre in same_genres %}
               <div class="recommend-movie col-4">
@@ -73,22 +78,22 @@
 
       <section class="col-6">
         <div class="trailer">
-          <h2>trailer</h2>
+          <h2>예고편</h2>
           <!-- <iframe id="encoder_iframe" height=400px; width="100%" src="{{ videoUrl }}" class="movie-trailer"></iframe> -->
         </div>
 
         <div class="review-list-container">
-          <h2>reviews</h2>
-          <p>제목을 클릭하시면 해당 리뷰로 이동합니다.</p>
+          <h2>리뷰/평점</h2>
+          <p>*제목을 클릭하시면 해당 리뷰로 이동합니다.</p>
           
           <div class="review-list">
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">score</th>
-                  <th scope="col">content</th>
-                  <th scope="col">username</th>
+                  <th scope="col">점수</th>
+                  <th scope="col">감상평</th>
+                  <th scope="col">작성자</th>
                 </tr>
               </thead>
               
