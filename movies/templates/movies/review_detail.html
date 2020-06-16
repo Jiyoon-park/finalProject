@@ -24,33 +24,47 @@
           <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
         </form>
-        <a href="#"><button class="btn btn-primary">아무버튼</button></a>
+        <a href="{% url 'movies:movie_detail' review.movie.id %}"><button class="btn btn-primary">영화로</button></a>
       </div>
     </nav>
-    <div class="user-info">
-      
-        <div class="user-img"></div>
-        <p class="username">{{ review.user.username }}</p>
-      
-    </div>
+    
   </header>
 
   
   <section>
     <div class="container">
       <div class="row">
-        <div class="review col-6">
-          {% if request.user != review.user %}
-          {% with review_like_users=review.like_users.all %}
-              {% if request.user in review_like_users %}
-                <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
-              {% else %}
-                <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:grey; cursor: pointer;"></i>
+        <div class="review col-7">
+          <div class="review-title">
+            <h1>{{ review.movie.title }}</h1>
+            <h2>{{ review.movie.original_title }}</h2>
+          </div>
+          <div class="review-details">
+            <div class="reivew-like">
+              {% if request.user != review.user %}
+              {% with review_like_users=review.like_users.all %}
+                  {% if request.user in review_like_users %}
+                    <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
+                  {% else %}
+                    <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
+                  {% endif %}
+              <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
+              {% endwith %}
               {% endif %}
-          <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
-          {% endwith %}
-          {% endif %}
-          <p>{{ review.content }}</p>
+            </div>
+            <div class="review-detail">
+              <span class="username">{{ review.user.username }}</span>           
+              <p class="created_date">{{ review.created_at }} 작성</p>
+            </div> 
+          </div>
+          
+          <div class="review-contents">
+            <p>{{ review.score }}</p>
+            <p>{{ review.content }}</p>
+            
+          </div>
+         
+          
           <div class="UD-buttons">
           {% if request.user == review.user %}
               <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
@@ -62,7 +76,7 @@
         </div>
         </div>
 
-        <div class="other-reviews col-6">
+        <div class="other-reviews col-5">
           <h2>{{ review.user.username }}님의 다른 리뷰</h2>
           <div class="review-list">
             <table class="table">
@@ -71,7 +85,7 @@
                   <th scope="col"></th>
                   <th scope="col">평점</th>
                   <th scope="col">영화</th>
-                  <th scope="col">작성일</th>
+                  <!-- <th scope="col">작성일</th> -->
                 </tr>
               </thead>
               {% for review in page_obj %}
@@ -80,7 +94,7 @@
                       <td scope="row">{{ forloop.counter }}</td>
                       <th scope="row">{{ review.score }}</th>
                       <th scope="row" class="review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.movie.title }}</a></th>
-                      <th scope="row">{{ review.created_at }}</th>
+                      <!-- <th scope="row">{{ review.created_at }}</th> -->
                     </tr>
                   </tbody>
               {% endfor %}
@@ -104,7 +118,7 @@
           if (response.data.success) {
             event.target.style.color = 'crimson'
           } else {
-            event.target.style.color = 'black'
+            event.target.style.color = 'grey'
           }
           document.querySelector(`#like-count-${reviewId}`).innerText = response.data.count
         })

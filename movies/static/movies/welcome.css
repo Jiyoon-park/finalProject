@@ -1,20 +1,17 @@
-@keyframes rolling {
+/* @keyframes rolling {
     0% {
-        transform: translateY(0);
+        margin-top: 0;
     }
-    25% {
-        transform: translateY(-20%);
+    33.3% {
+        margin-top: -1.5em;
     }
-    50% {
-        transform: translateY(-40%);
-    }
-    75% {
-        transform: translateY(-60%);
+    66.3% {
+        margin-top: -3em;
     }
     100% {
-        transform: translateY(-80%);
+        margin-top: -4.5em;
     }
-}
+} */
 
 body, h1, ul, button {
     margin: 0;
@@ -53,20 +50,21 @@ body {
 
 .title {
     font-size: 50px;
-    line-height: 2;
+    line-height: 1;
     font-style: italic;
     margin-bottom: 20px;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Suez One', serif;
     margin-bottom: 40px;
 }
 
 .title-adj {
     display: inline-block;
+    background-color: red;
     color: white;
-    vertical-align: top;
-    height: 2em;
-    overflow: hidden;
-    padding-right: 0.5em;
+    /* vertical-align: top; */
+    height: 1em;
+
+    /* overflow: hidden; */
 }
 
 .title-adj-list {

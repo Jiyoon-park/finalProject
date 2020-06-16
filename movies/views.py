@@ -74,10 +74,10 @@ def index(request):
         else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
     else: r_movies = Movie.objects.all().order_by('-popularity')[:5]
 
-    s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:5]
+    s_movies = Movie.objects.all().annotate(mean_score=Avg(F('review')), count_score=Count(F('review'))).order_by('-mean_score')[:3]
 
-    like_reviews = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:5]
-
+    like_reviews = Review.objects.all().annotate(count_like=Count('like_users')).order_by('-count_like')[:3]
+    reviews = Review.objects.all().order_by('-pk')[:3]
     genres = Genre.objects.all()
     g_movies = []
     for t in genres:
@@ -91,6 +91,7 @@ def index(request):
         'g_movies': g_movies,
         's_movies': s_movies,
         'like_reviews': like_reviews,
+        'reviews': reviews,
     }
     return render(request, 'movies/index.html', context)
 

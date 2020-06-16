@@ -19,15 +19,27 @@ h1, h2, h3 {
     font-weight: normal;
 }
 
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+
+header img {
+    margin-bottom: 3%;
+    width: 20rem;
+}
 /* 로고 */
-header h1 {
+/* header h1 {
     font-size: 3rem;
     line-height: 2;
     font-style: italic;
     font-family: 'Permanent Marker', cursive;
     margin-top: 100px;
     margin-bottom: 50px;
-}
+} */
 
 /* recommend-movie-section */
 .main-section {
@@ -36,11 +48,12 @@ header h1 {
 }
 
 .main-section h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
-    margin-bottom: 20px;
-    font-family: 'Permanent Marker', cursive;
-    color: darkcyan;
+    margin-bottom: 10px;
+    font-family: 'East Sea Dokdo', cursive;
+    /* color: #5758BB; */
+    color: #82ccdd;
 }
 
 .main-section .wrapper {
@@ -128,16 +141,16 @@ header h1 {
 }
 
 /* 아래 */
+.sub-sections {
+    margin-top: 50px;
+}
+
 .sub-sections h2 {
-    font-size: 40px;
+    font-size: 2.5rem;
     line-height: 2;
     /* font-style: italic; */
     font-family: 'East Sea Dokdo', cursive;
     color: darkcyan;
-}
-
-.sub-sections {
-    margin-top: 100px;
 }
 
 /* 장르별 무비 */
@@ -168,11 +181,6 @@ header h1 {
 .rank-item:hover {
     background-color: #999;
     color: white;
-}
-
-.movie-rank a {
-    text-decoration: none;
-    color: #222
 }
 
 .review-rank a {

@@ -7,24 +7,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'movies/welcome.css' %}" />
     
     <!-- google font -->
-    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet"> 
     
     <title>{%block title%}Welcome{% endblock %}</title>
 </head>
 <body>
     <div class="wrapper">
         <div class="title">
-            it's a
             <div class="title-adj">
                 <ul class="title-adj-list">
-                    <li>wonderful</li>
-                    <li>nice</li>
-                    <li>fancy</li>
-                    <li>cool</li>
-                    <li>wonderful</li>
+                    <li>Movie</li>
+                    <!-- <li>Review</li>
+                    <li>and Beer</li>
+                    <li>Movie</li> -->
                 </ul>
             </div>
-            <h1 class="web-name">Chobab's Project</h1>
+            <img src="/static/images/logo.png" alt="logo">
         </div>
         <div class="button">
           <a href="{% url 'movies:index' %}">

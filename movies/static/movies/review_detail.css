@@ -2,6 +2,16 @@ html, body {
     height: 100%;
 }
 
+h1, h2, p, button, i {
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
 header {
     height: 50%;
     background-position: center;
@@ -23,27 +33,9 @@ header:before {
 }
 
 
-/* user-info */
-.user-info {
-    position: absolute;
-    bottom: -25%;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.user-img {
-    width: 10rem;
-    height: 10rem;
-    border: 4px solid grey;
-    border-radius: 100%;
-    
-}
 
 .username {
-    font-size: 2rem;
+    font-size: 1.2rem;
     background-color: darkcyan;
     border-radius: 20px;
     color: #fff;
@@ -53,25 +45,34 @@ header:before {
 
 /* 리뷰 */
 .review {
-width: 100%;
-height: 50%;
-background-color: rgb(240, 240, 240);
-margin-top: 8%;
-border-radius: 10px;
-padding: 15px 30px;
-}
-
-.other-reviews {
     margin-top: 3%;
-    padding: 0 5%;
-}
-
-.review-list {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+}
+
+.review-title h1 {
+    font-size: 2rem;
+}
+
+.review-title h2 {
+    font-size: 1.5rem;
+}
+
+
+.review-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin: 1% 0;
+}    
+.review-contents {
+    width: 100%;
+    /* height: 50%; */
+    background-color: rgb(240, 240, 240);
+    border-radius: 10px;
+    padding: 15px 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .review-content {
@@ -86,4 +87,23 @@ padding: 15px 30px;
 .UD-buttons {
     display: flex;
     justify-content: flex-end;
+}
+
+/* 작성자의 다른 리뷰 */
+.other-reviews {
+    margin-top: 3%;
+    padding: 0 5%;
+}
+
+.other-reviews h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2%;
+}
+
+.review-list {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

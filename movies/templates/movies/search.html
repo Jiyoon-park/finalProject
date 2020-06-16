@@ -28,34 +28,34 @@
                 <div class="search-result row">
                     <div class="in-title col-6">
                         {% if movies_title %}
-                        <h3>* 제목에 <span>{{ search }}</span> 가 포함된 영화가 <span>{{ movies_title|length }}</span> 개 검색되었습니다.</h5>
+                        <h3>* 제목에 <span>{{ search }}</span>(이)가 포함된 영화가 <span>{{ movies_title|length }}</span> 개 검색되었습니다.</h5>
                             <div class="row">
                             {% for movie_title in movies_title %}
                                 <div class="search-movie col-4">
                                     <a href="{% url 'movies:movie_detail' movie_title.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie_title.poster_path}}" alt="" style="width:100%;"></a>
-                                    <p>{{ movie_title.title }}</p>
+                                    <p class="search-movie-title">{{ movie_title.title }}</p>
                                 </div>
                             {% endfor %}
                             </div>
                             {% else %}
-                            <p>* 제목에 <span>{{ search }}</span> 가 포함된 영화가 존재하지 않습니다.</p>
+                            <p>* 제목에 <span>{{ search }}</span>(이)가 포함된 영화가 존재하지 않습니다.</p>
                         {% endif %}
                         
                     </div> 
                     
                     <div class="in-content col-6">
                         {% if movies_overview %}
-                        <h3>* 내용에 <span>{{ search }}</span> 가 포함된 영화가 <span>{{ movies_overview|length }}</span> 개 검색되었습니다.</h5>
+                        <h3>* 내용에 <span>{{ search }}</span>(이)가 포함된 영화가 <span>{{ movies_overview|length }}</span> 개 검색되었습니다.</h5>
                             <div class="row">
                             {% for movie_overview in movies_overview %}
                                 <div class="search-movie col-4">
                                     <a href="{% url 'movies:movie_detail' movie_overview.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie_overview.poster_path}}" alt="" style="width:100%;"></a>
-                                    <p>{{ movie_overview.title }}</p>
+                                    <p class="search-movie-title">{{ movie_overview.title }}</p>
                                 </div>
                             {% endfor %}
                             </div>
                             {% else %}
-                            <p>* 내용에 <span>{{ search }}</span> 가 포함된 영화가 존재하지 않습니다.</p>
+                            <p>* 내용에 <span>{{ search }}</span>(이)가 포함된 영화가 존재하지 않습니다.</p>
                         {% endif %}
                     </div>
                 </div>
