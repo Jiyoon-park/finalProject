@@ -13,13 +13,13 @@
 
 {% block body %}
     <header class="head">
-        <h1 class="text-center">Chobab's Project</h1>
+        <div><img src="/static/images/logo.png" alt="logo"></div>
         {% include '__nav.html' %}
     </header>
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>recommended</h1>
+                <h1>당신의 취향에 꼭 맞을 영화</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
                       {% for movie in movies %} 
@@ -43,15 +43,77 @@
                   <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
                 </form>
             </section>
-
             <div class="row sub-sections">
-                <section class="col-8 genres">
-                    <h2>장르별별 영화</h2>
+              <!-- 랭킹 -->
+              <!-- <section> -->
+                <!-- 영화랭킹 -->
+                <div class="review-rank col-4">
+                  <h2>최고 인기작</h2>
+                  <ul class="list-group">
+                      {% for s_movie in s_movies %}
+                      <a href="{% url 'movies:movie_detail' s_movie.id %}">
+                        <li class="list-group-item rank-item">
+                          <div class="review-rank-item">
+                            <span class="rank">{{ forloop.counter }}</span>
+                            <div class="review-rank-item-details">
+                              <span class="review-content">{{ s_movie.title }}</span>
+                              <span class="review-movie-title">{{ s_movie.original_title }}</span>
+                            </div>
+                          </div>
+                        </li>
+                      </a>
+                      {% endfor %}
+                  </ul>
+                </div>
+                <!-- 좋아요 리뷰 랭킹 -->
+                <div class="review-rank col-4">
+                    <h2>베스트 리뷰</h2>
+                    <ul class="list-group">
+                        {% for like_review in like_reviews %}
+                        <a href="{% url 'movies:review_detail' like_review.id %}">
+                        <li class="list-group-item rank-item">
+                          <div class="review-rank-item">
+                            <span class="rank">{{ forloop.counter }}</span>
+                            <div class="review-rank-item-details">
+                              <span class="review-content">{{ like_review.content }}</span>
+                              <span class="review-movie-title">{{ like_review.movie.title }}</span>
+                            </div>
+                          </div>
+                        </li>
+                      </a>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <!-- 최신 리뷰 랭킹 -->
+                <div class="review-rank col-4">
+                  <h2>최신 리뷰</h2>
+                  <ul class="list-group">
+                      {% for review in reviews %}
+                      <a href="{% url 'movies:review_detail' review.id %}">
+                      <li class="list-group-item rank-item">
+                        <div class="review-rank-item">
+                          <span class="rank">{{ forloop.counter }}</span>
+                          <div class="review-rank-item-details">
+                            <span class="review-content">{{ review.content }}</span>
+                            <span class="review-movie-title">{{ review.movie.title }}</span>
+                          </div>
+                        </div>
+                      </li>
+                    </a>
+                      {% endfor %}
+                  </ul>
+                </div>
+              <!-- </section> -->
+            </div>
+
+            <div class="sub-sections">
+                <!-- <section class="col-8 genres"> -->
+                    <h2>장르별로 골라보는 재미!</h2>
                     <div class="row">
                     {% for g_movie in g_movies %}
                       {% for genre, movies in g_movie.items %}
                       {% if movies %}
-                      <div class="col-6 genre-movies">
+                      <div class="col-4 genre-movies">
                         <p class="genre-title">#{{ genre }}</p>
                         
                         <div id="carouselExampleControls{{genre}}" class="carousel slide" data-ride="carousel">
@@ -89,43 +151,9 @@
                       {% endfor %}
                     {% endfor %} 
                   </div>     
-                </section>
+                <!-- </section> -->
                 
-                <!-- 랭킹 -->
-                <section class="col-4">
-                    <!-- 영화랭킹 -->
-                    <div class="movie-rank">
-                        <h2>최고의 영화</h2>
-                        <ul class="list-group">
-                          {% for s_movie in s_movies %}
-                            <a href="{% url 'movies:movie_detail' s_movie.id %}">
-                            <li class="list-group-item rank-item">
-                              <span class="rank">{{ forloop.counter }}</span>{{ s_movie.title }}
-                            </li>
-                            </a>
-                          {% endfor %}
-                        </ul>
-                    </div>
-                    <!-- 리뷰랭킹 -->
-                    <div class="review-rank">
-                        <h2>베스트 리뷰</h2>
-                        <ul class="list-group">
-                            {% for like_review in like_reviews %}
-                            <a href="{% url 'movies:review_detail' like_review.id %}">
-                            <li class="list-group-item rank-item">
-                              <div class="review-rank-item">
-                                <span class="rank">{{ forloop.counter }}</span>
-                                <div class="review-rank-item-details">
-                                  <span class="review-content">{{ like_review.content }}</span>
-                                  <span class="review-movie-title">{{ like_review.movie.title }}</span>
-                                </div>
-                              </div>
-                            </li>
-                          </a>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </section>
+                
 
             </div>
         </div>

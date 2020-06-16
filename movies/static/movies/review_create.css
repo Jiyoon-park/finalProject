@@ -36,4 +36,6 @@
 
 .home-btn {
     position: absolute;
+    left: 5px;
+    top: 7px;
 }
