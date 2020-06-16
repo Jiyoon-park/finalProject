@@ -19,7 +19,7 @@
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>Recommended</h1>
+                <h1>recommended</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
                       {% for movie in movies %} 
@@ -28,9 +28,7 @@
                             <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster"></a>
                             <div class="detail-contents">
                               <h2>{{ movie.title }}</h2>
-                              <!-- <p>{{ movie.release_date }}</p> -->
-                              <!-- 평점 점수를 넣는건 어떨까 -->
-                              <p>{{ movie.popularity }}</p>
+                              <p>{{ movie.original_title }}</p>
                             </div>
                           </div>
                         </li>
@@ -48,15 +46,13 @@
 
             <div class="row sub-sections">
                 <section class="col-8 genres">
-                    <h2>Genres</h2>
+                    <h2>장르별별 영화</h2>
                     <div class="row">
-                    
                     {% for g_movie in g_movies %}
-                    <!-- 장르별로 영화 구분해서 for문 돌려야 함 -->
                       {% for genre, movies in g_movie.items %}
                       {% if movies %}
                       <div class="col-6 genre-movies">
-                        <p>{{ genre }}</p>
+                        <p class="genre-title">#{{ genre }}</p>
                         
                         <div id="carouselExampleControls{{genre}}" class="carousel slide" data-ride="carousel">
                           <div class="carousel-inner">
@@ -65,12 +61,16 @@
                                 {% if forloop.counter0 == 0%}
                                 <div class="carousel-item active text-center">
                                     <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500/{{ movie.backdrop_path }}" class="d-block w-100" alt="movie-sub-poster"></a>
-                                    <p class="text-center text-white mt-1">{{ movie.title }}</p>
+                                    <div class="carousel-caption d-none d-md-block p-0">
+                                      <p>{{ movie.title }}</p>
+                                    </div>
                                 </div>
                                 {% else %}
                                 <div class="carousel-item text-center">
                                     <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/w500/{{ movie.backdrop_path }}" class="d-block w-100" alt="movie-sub-poster"></a>
-                                    <p class="text-center text-decoration-none text-white mt-1">{{ movie.title }}</p>
+                                    <div class="carousel-caption d-none d-md-block p-0">
+                                      <p>{{ movie.title }}</p>
+                                    </div>
                                 </div>
                                 {% endif %}
                                 {% endfor %}
@@ -84,30 +84,44 @@
                             <span class="sr-only">Next</span>
                           </a>
                         </div>
-                        
                       </div>
                       {% endif %}
                       {% endfor %}
                     {% endfor %} 
                   </div>     
                 </section>
-
+                
+                <!-- 랭킹 -->
                 <section class="col-4">
+                    <!-- 영화랭킹 -->
                     <div class="movie-rank">
-                        <h2>Movie rank</h2>
+                        <h2>최고의 영화</h2>
                         <ul class="list-group">
-                            <li class="list-group-item active border border-info bg-info">movie ranking</li>
-                            {% for s_movie in s_movies %}
-                            <li class="list-group-item rank-item"><span class="rank">{{ forloop.counter }}</span><a href="{% url 'movies:movie_detail' s_movie.id %}" class="text-decoration-none text-dark">{{ s_movie.title }}</a></li>
-                            {% endfor %}
+                          {% for s_movie in s_movies %}
+                            <a href="{% url 'movies:movie_detail' s_movie.id %}">
+                            <li class="list-group-item rank-item">
+                              <span class="rank">{{ forloop.counter }}</span>{{ s_movie.title }}
+                            </li>
+                            </a>
+                          {% endfor %}
                         </ul>
                     </div>
+                    <!-- 리뷰랭킹 -->
                     <div class="review-rank">
-                        <h2>Review rank</h2>
+                        <h2>베스트 리뷰</h2>
                         <ul class="list-group">
-                            <li class="list-group-item active border border-info bg-info">review ranking</li>
                             {% for like_review in like_reviews %}
-                            <li class="list-group-item rank-item"><span class="rank">{{ forloop.counter }}</span><a href="{% url 'movies:review_detail' like_review.id %}" class="text-decoration-none text-dark">{{ like_review.content }}</a></li>
+                            <a href="{% url 'movies:review_detail' like_review.id %}">
+                            <li class="list-group-item rank-item">
+                              <div class="review-rank-item">
+                                <span class="rank">{{ forloop.counter }}</span>
+                                <div class="review-rank-item-details">
+                                  <span class="review-content">{{ like_review.content }}</span>
+                                  <span class="review-movie-title">{{ like_review.movie.title }}</span>
+                                </div>
+                              </div>
+                            </li>
+                          </a>
                             {% endfor %}
                         </ul>
                     </div>

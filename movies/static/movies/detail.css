@@ -2,6 +2,24 @@ html, body {
   height: 100%;
 }
 
+body, h1, h2, h4, p {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+/* 헤더  */
 header {
     height: 50%;
     background-position: center;
@@ -24,17 +42,71 @@ header:before {
 
 .header-bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 5%;
   left: 0;
   right: 0;
   color: #fff;
 }
 
+/* 헤더의 영화 정보 버튼들 */
+.buttons .R-rated {
+  background-color: rgb(221, 2, 2);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.buttons .G-rated {
+  background-color: green;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.buttons .language {
+  background-color: grey;
+  border-radius: 4px;
+  padding: 2px 4px;
+  text-transform: uppercase;
+}
+
+.titles {
+  margin: 1% 0;
+}
+
+/* 아래부분 */
 .movie-info, .recommend-movies, .trailer, .review-list  {
   margin-top: 3%;
   padding: 15px 0;
 }
 
+/* movie-info => 줄거리 부분 */
+.movie-info h2 {
+  margin-bottom: 2%;
+}
+
+.movie-info .movie-overview {
+    text-indent: 2em;
+}
+
+.movie-info .movie-genres {
+  margin: 2% 0;
+}
+
+.movie-info .movie-genres p {
+  margin-bottom: 1%;
+  font-style: italic;
+}
+
+.movie-info .movie-genre {
+  background-color: darkcyan;
+  border-radius: 4px;
+  padding: 5px 10px;
+  color: #fff
+}
+
+/* 같은 장르 영화 3개 추천 */
+.recommend-movies h2  {
+  margin-bottom: 2%;
+}
 .recommend-movie {
   flex-basis: 180px;
   transition: all 0.4s;
@@ -45,6 +117,20 @@ header:before {
 
 .recommend-movie img {
   border-radius: 5px;
+}
+
+/* 트레일러 */
+.trailer h2  {
+  margin-bottom: 2%;
+}
+
+/* 리뷰&평점 */
+.review-list-container h2 {
+  margin-bottom: 2%;
+}
+
+.review-list-container p {
+  color: #888;
 }
 
 .review-list {
@@ -64,6 +150,9 @@ header:before {
   height: 50px;
 }
 
-.movie-trailer {
-  border: none;
+.best-review {
+  background-color: rgba(255, 0, 0, 0.808);
+  color: #fff;
+  border-radius: 4px;
+  padding: 2px 7px;
 }
