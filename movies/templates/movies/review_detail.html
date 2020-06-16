@@ -43,11 +43,15 @@
             <div class="reivew-like">
               {% if request.user != review.user %}
               {% with review_like_users=review.like_users.all %}
+                {% if request.user.is_authenticated %}
                   {% if request.user in review_like_users %}
                     <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
                   {% else %}
                     <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
                   {% endif %}
+                {% else %}
+                  <i class="fas fa-heart fa-lg" style="color:crimson;"></i>
+                {% endif %}
               <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
               {% endwith %}
               {% endif %}
