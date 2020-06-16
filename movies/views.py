@@ -120,7 +120,7 @@ def movie_detail(request, movie_pk):
 
 
 
-    reviews = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:1] | Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
+    reviews = Review.objects.annotate(count_like=Count('like_users')).order_by('-count_like')[:3] | Review.objects.filter(movie_id=movie.pk).order_by('-created_at')
     paginator = Paginator(reviews,5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
