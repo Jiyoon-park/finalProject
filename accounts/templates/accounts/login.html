@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
+{% load socialaccount %}
 
 {% block title %}login{% endblock %}
 
@@ -93,8 +94,8 @@ body:before {
         <div class="all-auth">
             <p>사용하고 계신 계정으로 로그인해보세요!</p>
             <div class="all-auth-bnts">
-                <button class="btn btn-success naver-btn">naver</button>
-                <button class="btn btn-primary google-btn">google</button>
+                <a class="btn btn-success naver-btn" href="{% provider_login_url 'naver'%}">naver</a>
+                <a class="btn btn-primary google-btn" href="{% provider_login_url 'google'%}">google</a>
             </div>
         </div>
     </div>
