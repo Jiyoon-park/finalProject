@@ -27,32 +27,27 @@
         <a href="#"><button class="btn btn-primary">아무버튼</button></a>
       </div>
     </nav>
-    <div class="user">
-      <div class="user-img"></div>
-      <!-- <p>{{ review.user.username }}</p> -->
-    </div>
-    
-    <h3 class="title">{{ review.movie.title }}</h3>
   </header>
 
-  
+  <div class="user-info">
+    <div class="user-img"></div>
+    <p class="username">{{ review.user.username }}</p>
+  </div>
   <section>
     <div class="container">
       <div class="row">
         <div class="review col-6">
-          <p>{{ review.content }}</p>
           {% if request.user != review.user %}
           {% with review_like_users=review.like_users.all %}
               {% if request.user in review_like_users %}
-                <i class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
-                <button data-id="{{review.pk}}">좋아요 취소</button>
+                <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
               {% else %}
-                <i class="fas fa-heart fa-lg like-button" style="color:grey; cursor: pointer;"></i>
-                <button data-id="{{review.pk}}">좋아요</button>
+                <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:grey; cursor: pointer;"></i>
               {% endif %}
-          <p id="like-count-{{review.pk}}">{{ review_like_users|length }} 명이 좋아합니다. </p>
+          <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
           {% endwith %}
           {% endif %}
+          <p>{{ review.content }}</p>
           <div class="UD-buttons">
           {% if request.user == review.user %}
               <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
@@ -71,9 +66,9 @@
               <thead>
                 <tr>
                   <th scope="col"></th>
-                  <th scope="col">score</th>
-                  <th scope="col">movie-title</th>
-                  <th scope="col">date</th>
+                  <th scope="col">평점</th>
+                  <th scope="col">영화</th>
+                  <th scope="col">작성일</th>
                 </tr>
               </thead>
               {% for review in page_obj %}
@@ -97,19 +92,18 @@
   
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
-    Button = document.querySelectorAll('button[data-id]')
-    heart = document.querySelectorAll('i')
+    Button = document.querySelectorAll('.like-button')
     Button.forEach(function(likeButton) {
       likeButton.addEventListener('click', function(event) {
         const reviewId = event.target.dataset.id
         axios.get(`/${reviewId}/like/`)
         .then( response => {
           if (response.data.success) {
-            event.target.innerText = '좋아요 취소'
+            event.target.style.color = 'crimson'
           } else {
-            event.target.innerText = '좋아요'
+            event.target.style.color = 'black'
           }
-          document.querySelector(`#like-count-${reviewId}`).innerText = response.data.count + '명이 이 글을 좋아합니다.'
+          document.querySelector(`#like-count-${reviewId}`).innerText = response.data.count
         })
         .catch(error=> {console.log(response)})
       })
