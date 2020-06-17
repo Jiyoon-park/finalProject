@@ -1,18 +1,17 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.decorators.http import require_POST
-from .models import Movie, Review, Genre
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.contrib import messages
+from .models import Movie, Review, Genre
+from .forms import ReviewForm
 
 from django.db.models import Sum, F, Avg, Count, Q
 
 import numpy as np
 import pandas as pd
-
-from .forms import ReviewForm
-
 import requests
 
 API_URL = 'https://www.googleapis.com/youtube/v3/search'
@@ -150,6 +149,7 @@ def review_create(request, movie_pk):
                     review.user = request.user
                     review.movie = movie
                     review.save()
+                messages.success(request, '글이 성공적으로 작성되었습니다😉')
                 return redirect('movies:review_detail', review.pk)
             else:
                 form = ReviewForm()
@@ -188,6 +188,7 @@ def review_update(request, review_pk):
             form = ReviewForm(request.POST, instance=review)
             if form.is_valid():
                 review = form.save()
+                messages.success(request, '글이 성공적으로 수정되었습니다😉')
                 return redirect('movies:review_detail', review.pk)
         else:
             form = ReviewForm(instance=review)

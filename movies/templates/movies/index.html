@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
 
-{% block title %}main{% endblock %}
+{% block title %}mooBeer{% endblock %}
 
 {% block CSS %}
 {% load static %}
@@ -19,7 +19,7 @@
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>당신의 취향에 꼭 맞을 영화</h1>
+                <h1>Recommended</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
                       {% for movie in r_movies %} 
