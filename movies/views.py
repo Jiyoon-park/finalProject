@@ -131,7 +131,7 @@ def movie_detail(request, movie_pk):
         'reviews': reviews,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
-        'able': Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie.id))[0],
+        'able': Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie.id)),
     }
     return render(request, 'movies/movie_detail.html', context)
 
@@ -155,7 +155,6 @@ def review_create(request, movie_pk):
         else: return redirect('movies:movie_detail', movie_pk)
     else:
         return redirect('accounts:login')
-
 
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)

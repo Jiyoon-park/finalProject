@@ -1,0 +1,22 @@
+<!-- As a heading -->
+<style>
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #999;
+        font-family: 'Roboto', sans-serif;
+        margin-top: 5%;
+    }
+
+    .footer img {
+        width: 100px;
+    }
+
+    
+</style>
+
+<nav class="navbar footer">
+    <div><a href="{% url 'movies:index' %}"><img src="/static/images/logo.png" alt="logo"></a></div>
+    <span class="navbar-brand mb-0 h1 text-center">Copyright © 2020 by moobeer, Inc. All rights reserved.</span>
+</nav>
