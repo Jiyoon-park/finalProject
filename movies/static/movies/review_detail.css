@@ -101,7 +101,7 @@ header:before {
 
 .other-reviews h2 {
     font-size: 1.5rem;
-    margin-bottom: 2%;
+    margin-bottom: 5%;
 }
 
 .review-list {
@@ -119,4 +119,14 @@ header:before {
     white-space: nowrap;
     width: 200px;
     height: 50px;
+}
+
+.other-review-content a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.review-list-item:hover {
+    color: #fff;
+    background-color: #999;
 }

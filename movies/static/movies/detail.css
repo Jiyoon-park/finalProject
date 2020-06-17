@@ -156,3 +156,22 @@ header:before {
   border-radius: 4px;
   padding: 2px 7px;
 }
+
+.review-content {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 200px;
+  height: 50px;
+}
+
+.review-content a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.review-list-item:hover {
+  color: #fff;
+  background-color: #999;
+}

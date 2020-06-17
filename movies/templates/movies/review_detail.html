@@ -97,7 +97,7 @@
               </thead>
               {% for review in page_obj %}
                   <tbody>
-                    <tr>
+                    <tr class="review-list-item">
                       <td scope="row">{{ forloop.counter }}</td>
                       <th scope="row">{{ review.score }}</th>
                       <th scope="row" class="other-review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.movie.title }}</a></th>

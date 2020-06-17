@@ -197,5 +197,11 @@ header img {
     color: #333;
 }
 
-/* footer */
+.review-content {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 200px;
+}
 
