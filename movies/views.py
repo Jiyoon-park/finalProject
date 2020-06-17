@@ -161,7 +161,6 @@ def review_create(request, movie_pk):
     else:
         return redirect('accounts:login')
 
-
 def review_detail(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
     other_reviews = Review.objects.filter(user_id=review.user_id).exclude(id=review.id)
