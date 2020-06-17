@@ -131,6 +131,7 @@ def movie_detail(request, movie_pk):
         'reviews': reviews,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
+        'able': Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie.id))[0],
     }
     return render(request, 'movies/movie_detail.html', context)
 
@@ -177,6 +178,7 @@ def review_delete(request, review_pk):
 
 def review_update(request, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
+    movie = Movie.objects.get(id=review.movie_id)
     if request.user == review.user:
         if request.method == 'POST':
             form = ReviewForm(request.POST, instance=review)
@@ -186,7 +188,7 @@ def review_update(request, review_pk):
                 return redirect('movies:review_detail', review.pk)
         else:
             form = ReviewForm(instance=review)
-        context = {'form': form}
+        context = {'form': form, 'movie':movie}
         return render(request, 'movies/review_create.html', context)
     else:
         return redirect('movies:review_detail', review.pk)
