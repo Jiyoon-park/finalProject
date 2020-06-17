@@ -137,20 +137,22 @@ def movie_detail(request, movie_pk):
 
 def review_create(request, movie_pk):
     if request.user.is_authenticated:
-        movie = get_object_or_404(Movie, pk=movie_pk)
-        if request.method == 'POST':
-            form = ReviewForm(request.POST)
-            if form.is_valid():
-                review = form.save(commit=False)
-                review.user = request.user
-                review.movie = movie
-                review.save()
-            messages.success(request, '글이 성공적으로 작성되었습니다😉')
-            return redirect('movies:review_detail', review.pk)
-        else:
-            form = ReviewForm()
-        context = {'form':form, 'movie':movie}
-        return render(request, 'movies/review_create.html', context)
+        if not Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie_pk)):
+            movie = get_object_or_404(Movie, pk=movie_pk)
+            if request.method == 'POST':
+                form = ReviewForm(request.POST)
+                if form.is_valid():
+                    review = form.save(commit=False)
+                    review.user = request.user
+                    review.movie = movie
+                    review.save()
+                messages.success(request, '글이 성공적으로 작성되었습니다😉')
+                return redirect('movies:review_detail', review.pk)
+            else:
+                form = ReviewForm()
+            context = {'form':form, 'movie':movie}
+            return render(request, 'movies/review_create.html', context)
+        else: return redirect('movies:movie_detail', movie_pk)
     else:
         return redirect('accounts:login')
 
