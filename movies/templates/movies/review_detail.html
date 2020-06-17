@@ -43,11 +43,15 @@
             <div class="reivew-like">
               {% if request.user != review.user %}
               {% with review_like_users=review.like_users.all %}
+                {% if request.user.is_authenticated %}
                   {% if request.user in review_like_users %}
                     <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
                   {% else %}
                     <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
                   {% endif %}
+                {% else %}
+                  <i class="fas fa-heart fa-lg" style="color:crimson;"></i>
+                {% endif %}
               <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
               {% endwith %}
               {% endif %}
@@ -59,21 +63,21 @@
           </div>
           
           <div class="review-contents">
-            <p>{{ review.score }}</p>
+            <p><span class="movie-score">영화평점</span> {{ review.score }}점</p>
             <p>{{ review.content }}</p>
-            
+            <div class="UD-buttons">
+              {% if request.user == review.user %}
+                  <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
+                      {% csrf_token %}
+                      <button class="btn btn-danger mr-2">삭제</button>
+                  </form>
+                  <a href="{% url 'movies:review_update' review.pk %}" class="btn btn-warning">수정</a>
+              {% endif %}
+            </div>
           </div>
          
           
-          <div class="UD-buttons">
-          {% if request.user == review.user %}
-              <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
-                  {% csrf_token %}
-                  <button class="btn btn-danger mr-2">삭제</button>
-              </form>
-              <a href="{% url 'movies:review_update' review.pk %}" class="btn btn-warning">수정</a>
-          {% endif %}
-        </div>
+          
         </div>
 
         <div class="other-reviews col-5">

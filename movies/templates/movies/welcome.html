@@ -12,23 +12,46 @@
     <title>{%block title%}Welcome{% endblock %}</title>
 </head>
 <body>
-    <div class="wrapper">
+    <!-- <div class="wrapper">
         <div class="title">
+            it's a
             <div class="title-adj">
                 <ul class="title-adj-list">
-                    <li>Movie</li>
-                    <!-- <li>Review</li>
-                    <li>and Beer</li>
-                    <li>Movie</li> -->
+                    <li>wonderful</li>
+                    <li>nice</li>
+                    <li>fancy</li>
+                    <li>cool</li>
+                    <li>wonderful</li>
                 </ul>
             </div>
+            <h1 class="web-name">Chobab's Project</h1>
+        </div>
+    </div> -->
+    <div class="wrapper">
+        <div class="title">
             <img src="/static/images/logo.png" alt="logo">
+            <div>
+            it's a
+            <div class="title-adj">
+                <ul class="title-adj-list">
+                    <li>wonderful</li>
+                    <li>fancy</li>
+                    <li>super cool</li>
+                    <li>lovely</li>
+                    <li>wonderful</li>
+                </ul>
+            </div>
+            website <span class="for">for</span> <span class="movier">movie<span class="goe">goe</span>rs</span>
+            <!-- <h1 class="web-name">Chobab's Project</h1> -->
+            <!-- <img class="web-name" src="/static/images/logo.png" alt="logo"> -->
+        </div>
         </div>
         <div class="button">
-          <a href="{% url 'movies:index' %}">
-              Click Here
-          </a>
+            <a href="{% url 'movies:index' %}">
+                Click Here
+            </a>
         </div>
     </div>
+
 </body>
 </html>

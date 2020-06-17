@@ -19,10 +19,10 @@
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>당신의 취향에 꼭 맞을 영화</h1>
+                <h1>Recommended</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
-                      {% for movie in movies %} 
+                      {% for movie in r_movies %} 
                         <li class="recommend-movie">
                           <div class="recommend-movie-detail">
                             <a href="{% url 'movies:movie_detail' movie.id %}"><img src="https://image.tmdb.org/t/p/original/{{ movie.poster_path}}" alt="movie-poster"></a>
