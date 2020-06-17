@@ -125,13 +125,18 @@ def movie_detail(request, movie_pk):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    able = Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie.id))
+    if able: able=able[0]
+    else: able = False
+
+
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
-        'able': Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie.id))[0],
+        'able': able,
     }
     return render(request, 'movies/movie_detail.html', context)
 
