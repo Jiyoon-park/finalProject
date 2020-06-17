@@ -2,7 +2,7 @@
 {% load bootstrap4 %}
 {% load bootstrap_pagination %}
 
-{% block title %}review-datail{% endblock %}
+{% block title %}{{ review.movie.title }} review{% endblock %}
 
 {% block CSS %}
 {% load static %}
@@ -40,22 +40,7 @@
             <h2>{{ review.movie.original_title }}</h2>
           </div>
           <div class="review-details">
-            <div class="reivew-like">
-              {% if request.user != review.user %}
-              {% with review_like_users=review.like_users.all %}
-                {% if request.user.is_authenticated %}
-                  {% if request.user in review_like_users %}
-                    <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
-                  {% else %}
-                    <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
-                  {% endif %}
-                {% else %}
-                  <i class="fas fa-heart fa-lg" style="color:crimson;"></i>
-                {% endif %}
-              <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
-              {% endwith %}
-              {% endif %}
-            </div>
+            
             <div class="review-detail">
               <span class="username">{{ review.user.username }}</span>           
               <p class="created_date">{{ review.created_at }} 작성</p>
@@ -63,8 +48,26 @@
           </div>
           
           <div class="review-contents">
-            <p><span class="movie-score">영화평점</span> {{ review.score }}점</p>
-            <p>{{ review.content }}</p>
+            <div class="review-scores">
+              <p><span class="movie-score">영화평점</span> {{ review.score }}점</p>
+              <div class="reivew-like">
+                {% if request.user != review.user %}
+                {% with review_like_users=review.like_users.all %}
+                  {% if request.user.is_authenticated %}
+                    {% if request.user in review_like_users %}
+                      <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color:crimson; cursor: pointer;"></i>
+                    {% else %}
+                      <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
+                    {% endif %}
+                  {% else %}
+                    <i class="fas fa-heart fa-lg" style="color:crimson;"></i>
+                  {% endif %}
+                <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
+                {% endwith %}
+                {% endif %}
+              </div>
+            </div>
+            <p class="review-content">{{ review.content }}</p>
             <div class="UD-buttons">
               {% if request.user == review.user %}
                   <form action="{% url 'movies:review_delete' review.pk %}" method='POST'>
@@ -97,7 +100,7 @@
                     <tr>
                       <td scope="row">{{ forloop.counter }}</td>
                       <th scope="row">{{ review.score }}</th>
-                      <th scope="row" class="review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.movie.title }}</a></th>
+                      <th scope="row" class="other-review-content"><a href ="{% url 'movies:review_detail' review.pk %}">{{ review.movie.title }}</a></th>
                       <!-- <th scope="row">{{ review.created_at }}</th> -->
                     </tr>
                   </tbody>
