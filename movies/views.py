@@ -125,31 +125,37 @@ def movie_detail(request, movie_pk):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    if Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie_pk)): able=False
+    else: able=True
+
     context = {
         'movie': movie,
         'same_genres': same_genres,
         'reviews': reviews,
         # 'videoUrl': videoUrl,
         'page_obj': page_obj,
+        'able': able,
     }
     return render(request, 'movies/movie_detail.html', context)
 
 def review_create(request, movie_pk):
     if request.user.is_authenticated:
-        movie = get_object_or_404(Movie, pk=movie_pk)
-        if request.method == 'POST':
-            form = ReviewForm(request.POST)
-            if form.is_valid():
-                review = form.save(commit=False)
-                review.user = request.user
-                review.movie = movie
-                review.save()
-            messages.success(request, '글이 성공적으로 작성되었습니다😉')
-            return redirect('movies:review_detail', review.pk)
-        else:
-            form = ReviewForm()
-        context = {'form':form, 'movie':movie}
-        return render(request, 'movies/review_create.html', context)
+        if not Review.objects.filter(Q(user_id=request.user.id) & Q(movie_id=movie_pk)):
+            movie = get_object_or_404(Movie, pk=movie_pk)
+            if request.method == 'POST':
+                form = ReviewForm(request.POST)
+                if form.is_valid():
+                    review = form.save(commit=False)
+                    review.user = request.user
+                    review.movie = movie
+                    review.save()
+                messages.success(request, '글이 성공적으로 작성되었습니다😉')
+                return redirect('movies:review_detail', review.pk)
+            else:
+                form = ReviewForm()
+            context = {'form':form, 'movie':movie}
+            return render(request, 'movies/review_create.html', context)
+        else: return redirect('movies:movie_detail', movie_pk)
     else:
         return redirect('accounts:login')
 
