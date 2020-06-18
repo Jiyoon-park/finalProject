@@ -19,10 +19,10 @@
   <header class="d-flex flex-column">
     <nav class="mt-2 px-2">
       <div class="d-flex justify-content-between">
-        <a href="{% url 'movies:index' %}"><button class="btn btn-primary">Home</button></a>
+        <a href="{% url 'movies:index' %}"><button class="btn btn-primary">홈으로</button></a>
         <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
-          <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-info my-2 my-sm-0">Search</button>
+          <input class="form-control mr-sm-2 text-center" type="search" name="search" placeholder="영화 검색" aria-label="Search">
+          <button class="btn btn-info my-2 my-sm-0">검색</button>
         </form>
         {%if able%}
         <a href="{% url 'movies:review_update' able.id %}"><button class="btn btn-primary">리뷰수정</button></a>
@@ -47,7 +47,7 @@
           <h1>{{ movie.title }}</h1>
           <h3>{{ movie.original_title }}</h3>
         </div>
-        <p>{{ movie.release_date }}</p>
+        <p>{{ movie.release_date }} 개봉작</p>
       </div>
     </div>
   </header>

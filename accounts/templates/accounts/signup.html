@@ -49,12 +49,12 @@ body:before {
 
 <body>
     <div class="wrapper">
-        <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">Home</button></a>
+        <a href="{% url 'movies:index' %}"><button class="btn btn-primary home-btn">홈으로</button></a>
         <h1>signup</h1>
         <form action="" method="POST" style="width:400px">
             {% csrf_token %}
             {% bootstrap_form form%}
-            <button class="btn btn-info text-center" style="width:100%">sumit</button>
+            <button class="btn btn-info text-center" style="width:100%">회원가입</button>
         </form>
     </div>
 </body>

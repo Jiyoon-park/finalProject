@@ -19,7 +19,7 @@
     <body>
         <div class="container">
             <section class="main-section">
-                <h1>Recommended</h1>
+                <h1>바로 취향저격 탕탕탕</h1>
                 <div class="wrapper">
                     <ul class="recommend-movies">
                       {% for movie in r_movies %} 
@@ -39,8 +39,8 @@
 
             <section class="search-section">
                 <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
-                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="What are you looking for?" aria-label="Search" style="width:400px; text-align: center;">
-                  <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
+                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="어떤 영화를 찾으시나요?" aria-label="Search" style="width:400px; text-align: center;">
+                  <button class="btn btn-info my-2 my-sm-0">검색</button>
                 </form>
             </section>
             <div class="row sub-sections">

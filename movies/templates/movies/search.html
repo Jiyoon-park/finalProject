@@ -17,14 +17,20 @@
     <body>
             <section class="search-section">
                 <form class="form-inline my-2 my-lg-0" action="{% url 'movies:search' %}">
-                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="What are you looking for?" aria-label="Search" style="width:400px; text-align: center;">
-                  <button class="btn btn-outline-info my-2 my-sm-0">Search</button>
+                  <input class="form-control mr-sm-2" type="search" name="search" placeholder="어떤 영화를 찾으시나요?" aria-label="Search" style="width:400px; text-align: center;">
+                  <button class="btn btn-info my-2 my-sm-0">검색</button>
                 </form>
             </section>
             <div class="container">
                 <div class="target">
+                    {% if search %}
                     <h3><span>{{ search }}</span> (으)로 검색한 결과입니다.</h3>
+                    {% else %}
+                    <h3>검색어가 입력되지 않았습니다. 검색어를 입력해주세요.</h3>
+                    <p class="search-example">예) star, 스타, 스타트랙</p>
+                    {% endif %}
                 </div>
+                {% if search %}
                 <div class="search-result row">
                     <div class="in-title col-6">
                         {% if movies_title %}
@@ -59,6 +65,7 @@
                         {% endif %}
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
         {% include '__footer.html' %}

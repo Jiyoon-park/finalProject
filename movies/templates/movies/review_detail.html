@@ -59,12 +59,11 @@
                     {% else %}
                       <i data-id="{{review.pk}}" class="fas fa-heart fa-lg like-button" style="color: grey; cursor: pointer;"></i>
                     {% endif %}
-                  {% else %}
-                    <i class="fas fa-heart fa-lg" style="color:crimson;"></i>
                   {% endif %}
-                <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
                 {% endwith %}
                 {% endif %}
+                <i class="fas fa-heart fa-lg" style="color:crimson;"></i>  
+                <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
               </div>
             </div>
             <p class="review-content">{{ review.content }}</p>
