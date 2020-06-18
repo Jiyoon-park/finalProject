@@ -63,7 +63,7 @@
                 {% endwith %}
                 {% endif %}
                 <i class="fas fa-heart fa-lg" style="color:crimson;"></i>  
-                <span id="like-count-{{review.pk}}">{{ review_like_users|length }}</span>
+                <span id="like-count-{{review.pk}}">{{ review.like_users.all.count }}</span>
               </div>
             </div>
             <p class="review-content">{{ review.content }}</p>
