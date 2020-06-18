@@ -15,7 +15,7 @@ import pandas as pd
 import requests
 
 API_URL = 'https://www.googleapis.com/youtube/v3/search'
-YOUTUBE_API_KEY = 'AIzaSyAT2qLRtiGQdVc4qoDby1xGxt3a8kBY99U'
+YOUTUBE_API_KEY = 'AIzaSyBcKk5SiTN37NHQvFobEOeBayi5C9RUp5M'
 
 # Create your views here.
 def welcome(request):

@@ -51,6 +51,12 @@ header img {
     padding: 5px 10px;
 }
 
+.target .search-example {
+    color: #999;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
 /* 검색 결과 포스터 */
 .search-movie {
     flex-basis: 180px;
